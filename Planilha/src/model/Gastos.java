@@ -4,7 +4,7 @@ public class Gastos {
 
     private String tipo;
     private int codigo;
-    private float valor;
+    private float valor,soma;
     private String data, mes;
 
     public Gastos() {

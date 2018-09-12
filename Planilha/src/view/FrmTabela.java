@@ -612,7 +612,7 @@ public class FrmTabela extends javax.swing.JFrame {
         CtrlGambiarra ct = new CtrlGambiarra();
         JComboBox jc = new JComboBox();
         Gastos[] gas = ct.getFiltros();
-        float soma = 0;
+        float soma=0;
         int cont = 0;
         DefaultTableModel modelo = (DefaultTableModel) jtTabela.getModel();
 
