@@ -222,7 +222,6 @@ public class FrmInserir extends javax.swing.JFrame {
     private void jtfValorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfValorKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jbIncluir.doClick();
-            //ve se alterou
         }
     }//GEN-LAST:event_jtfValorKeyPressed
 
