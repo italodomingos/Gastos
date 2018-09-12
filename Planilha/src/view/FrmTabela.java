@@ -612,6 +612,7 @@ public class FrmTabela extends javax.swing.JFrame {
         JComboBox jc = new JComboBox();
         Gastos[] gas = ct.getFiltros();
         float soma = 0;
+        int cont = 0;
         DefaultTableModel modelo = (DefaultTableModel) jtTabela.getModel();
 
         jc.addItem(null);
@@ -623,30 +624,31 @@ public class FrmTabela extends javax.swing.JFrame {
         String opc[] = {"Filtrar", "Adicionar Filtro", "Remover Filtro"};
         int x = JOptionPane.showOptionDialog(null, parametros, "Filtros", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opc, opc[0]);
         Gastos[] g = ct.getCtrlNome(jc.getSelectedItem().toString());
+       
+            if (x == 0 && cont==0) {
+                preencher(ct.getCtrlNome(jc.getSelectedItem().toString()));
+                cont++;
+            } else if (percorrerTabela(modelo, jc.getSelectedItem().toString()) == true) {
+                soma = Float.parseFloat(modelo.getValueAt(modelo.getRowCount() - 1, 2).toString().replace("R$", ""));
 
-        if (x == 0) {
-            preencher(ct.getCtrlNome(jc.getSelectedItem().toString()));
-        } else if (percorrerTabela(modelo, jc.getSelectedItem().toString()) == true) {
-            soma = Float.parseFloat(modelo.getValueAt(modelo.getRowCount() - 1, 2).toString().replace("R$", ""));
+                modelo.removeRow(modelo.getRowCount() - 1);
+                for (int i = 0; i < g.length; i++) {
+                    modelo.addRow(new Object[]{g[i].getCodigo(), g[i].getTipo(), "R$ " + g[i].getValor(), g[i].getData().replace('-', '/')});
+                    soma = soma + g[i].getValor();
+                }
+                modelo.addRow(new Object[]{"Total  ", "", "R$ " + soma});
+                cont++;
+            } else if (x == 2) {
+                soma = soma - removerRegistrosTabela(modelo, jc.getSelectedItem().toString());
+                modelo.addRow(new Object[]{"Total  ", "", "R$ " + soma});
 
-            modelo.removeRow(modelo.getRowCount() - 1);
-            for (int i = 0; i < g.length; i++) {
-                modelo.addRow(new Object[]{g[i].getCodigo(), g[i].getTipo(), "R$ " + g[i].getValor(), g[i].getData().replace('-', '/')});
-                soma = soma + g[i].getValor();
+            } else if (jc.getSelectedItem().equals(null)) {
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Filtro já utilizado", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            modelo.addRow(new Object[]{"Total  ", "", "R$ " + soma});
 
-        } else if (x == 2) {
-            soma = soma - removerRegistrosTabela(modelo, jc.getSelectedItem().toString());
-            modelo.addRow(new Object[]{"Total  ", "", "R$ " + soma});
-
-        } else if (jc.getSelectedItem().equals(null)) {
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Filtro já utilizado", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-
+        
     }//GEN-LAST:event_jmFiltrarMousePressed
 
     public static void main(String args[]) {
