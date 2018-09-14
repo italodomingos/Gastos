@@ -58,11 +58,9 @@ public class FrmTabela extends javax.swing.JFrame {
             }
         }
         for (int i = 0; i < limit; i++) {
-            
-            System.out.println(model.getValueAt(i, 0).toString());
-            
-            if (model.getValueAt(i, 0).toString().equals("Total")) {
-                System.out.println("Entrou "+i+" e "+model.getValueAt(i, 0).toString());
+
+            if (model.getValueAt(i, 0).toString().equalsIgnoreCase("Total")) {
+
                 model.removeRow(i);
             }
 
@@ -655,13 +653,13 @@ public class FrmTabela extends javax.swing.JFrame {
                 soma = soma + g[i].getValor();
             }
             help.setSoma(soma);
-            modelo.addRow(new Object[]{"Total  ", "", "R$ " + help.getSoma()});
+            modelo.addRow(new Object[]{"Total", "", "R$ " + help.getSoma()});
 
         } else if (x == 2) {
 
             help.setSoma(help.getSoma() - removerRegistrosTabela(modelo, jc.getSelectedItem().toString()));
 
-            modelo.addRow(new Object[]{"Total  ", "", "R$ " + help.getSoma()});
+            modelo.addRow(new Object[]{"Total", "", "R$ " + help.getSoma()});
 
         } else if (jc.getSelectedItem().equals(null)) {
 
