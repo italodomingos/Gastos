@@ -2,6 +2,7 @@ package view;
 
 import com.toedter.calendar.JDateChooser;
 import control.CtrlGambiarra;
+import control.Helper;
 import control.Verificacao;
 import java.io.File;
 import java.io.FileWriter;
@@ -26,7 +27,9 @@ import model.Gastos;
 
 public class FrmTabela extends javax.swing.JFrame {
 
-   int cont = 0;
+    Helper help = new Helper();
+    int cont = 0;
+
     public FrmTabela() {
 
         initComponents();
@@ -40,7 +43,7 @@ public class FrmTabela extends javax.swing.JFrame {
         int cont = 0, start = 0;
 
         float soma = 0;
-        int limit = model.getRowCount() - 1;
+        int limit = model.getRowCount();
         for (int i = 0; i < limit; i++) {
             if (model.getValueAt(i, 1).toString().equalsIgnoreCase(nome)) {
                 start = i;
@@ -54,10 +57,22 @@ public class FrmTabela extends javax.swing.JFrame {
 
             }
         }
+        for (int i = 0; i < limit; i++) {
+            
+            System.out.println(model.getValueAt(i, 0).toString());
+            
+            if (model.getValueAt(i, 0).toString().equals("Total")) {
+                System.out.println("Entrou "+i+" e "+model.getValueAt(i, 0).toString());
+                model.removeRow(i);
+            }
+
+        }
         for (int i = 0; i < cont; i++) {
+
             model.removeRow(start);
 
         }
+
         return soma;
 
     }
@@ -74,7 +89,7 @@ public class FrmTabela extends javax.swing.JFrame {
 
     public void preencher(Gastos[] g) {
         float soma = 0;
-        CtrlGambiarra ct = new CtrlGambiarra();
+
         DefaultTableModel modelo = new DefaultTableModel();
 
         jtTabela.setModel(modelo);
@@ -92,8 +107,10 @@ public class FrmTabela extends javax.swing.JFrame {
 
             modelo.addRow(new Object[]{g[i].getCodigo(), g[i].getTipo(), "R$ " + g[i].getValor(), g[i].getData().replace('-', '/')});
             soma = soma + g[i].getValor();
+
         }
-        modelo.addRow(new Object[]{"Total  ", "", "R$ " + soma});
+        help.setSoma(soma);
+        modelo.addRow(new Object[]{"Total", "", "R$ " + soma});
 
         jpTabela.setVisible(true);
 
@@ -612,7 +629,7 @@ public class FrmTabela extends javax.swing.JFrame {
         CtrlGambiarra ct = new CtrlGambiarra();
         JComboBox jc = new JComboBox();
         Gastos[] gas = ct.getFiltros();
-        float soma=0;
+        float soma = 0;
         int cont = 0;
         DefaultTableModel modelo = (DefaultTableModel) jtTabela.getModel();
 
@@ -622,25 +639,29 @@ public class FrmTabela extends javax.swing.JFrame {
         }
 
         Object[] parametros = {"Selecione um filtro", jc};
-        String opc[] = {"Filtrar", "Remover Filtro"};
+        String opc[] = {"Filtrar", "Add Filtro", "Remover Filtro"};
         int x = JOptionPane.showOptionDialog(null, parametros, "Filtros", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opc, opc[0]);
         Gastos[] g = ct.getCtrlNome(jc.getSelectedItem().toString());
         if (x == 0) {
             preencher(ct.getCtrlNome(jc.getSelectedItem().toString()));
-            
+
         } else if (percorrerTabela(modelo, jc.getSelectedItem().toString()) == true) {
             soma = Float.parseFloat(modelo.getValueAt(modelo.getRowCount() - 1, 2).toString().replace("R$", ""));
 
             modelo.removeRow(modelo.getRowCount() - 1);
+
             for (int i = 0; i < g.length; i++) {
                 modelo.addRow(new Object[]{g[i].getCodigo(), g[i].getTipo(), "R$ " + g[i].getValor(), g[i].getData().replace('-', '/')});
                 soma = soma + g[i].getValor();
             }
-            modelo.addRow(new Object[]{"Total  ", "", "R$ " + soma});
-            
+            help.setSoma(soma);
+            modelo.addRow(new Object[]{"Total  ", "", "R$ " + help.getSoma()});
+
         } else if (x == 2) {
-            soma = soma - removerRegistrosTabela(modelo, jc.getSelectedItem().toString());
-            modelo.addRow(new Object[]{"Total  ", "", "R$ " + soma});
+
+            help.setSoma(help.getSoma() - removerRegistrosTabela(modelo, jc.getSelectedItem().toString()));
+
+            modelo.addRow(new Object[]{"Total  ", "", "R$ " + help.getSoma()});
 
         } else if (jc.getSelectedItem().equals(null)) {
 

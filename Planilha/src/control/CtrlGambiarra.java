@@ -6,6 +6,8 @@ import model.Gastos;
 public class CtrlGambiarra {
 
     float soma = 0;
+    
+    
 
     public int salvarCtrl(Gastos gas) {
         return new DaoGastos().salvarDao(gas);
