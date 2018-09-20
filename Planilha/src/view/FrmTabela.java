@@ -35,7 +35,9 @@ public class FrmTabela extends javax.swing.JFrame {
         initComponents();
 
         setExtendedState(MAXIMIZED_BOTH);
-        jpTabela.setVisible(false);
+        jtpGeral.setEnabledAt(1, false);
+        jtpGeral.setEnabledAt(2, false);
+
 
     }
 
@@ -110,8 +112,6 @@ public class FrmTabela extends javax.swing.JFrame {
         help.setSoma(soma);
         modelo.addRow(new Object[]{"Total", "", "R$ " + soma});
 
-        jpTabela.setVisible(true);
-
     }
 
     public void setarData(String data1, String data2) {
@@ -166,13 +166,17 @@ public class FrmTabela extends javax.swing.JFrame {
         jMenu6 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jlIcone = new javax.swing.JLabel();
+        jtpGeral = new javax.swing.JTabbedPane();
+        jpInicio = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jpTabela = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtTabela = new javax.swing.JTable();
+        jpGraficos = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmNovo = new javax.swing.JMenu();
         jmiGasto = new javax.swing.JMenuItem();
-        jMenu7 = new javax.swing.JMenu();
+        jmMes = new javax.swing.JMenu();
         jmiJunho = new javax.swing.JMenuItem();
         jmiJulho = new javax.swing.JMenuItem();
         jmiAgosto = new javax.swing.JMenuItem();
@@ -180,7 +184,7 @@ public class FrmTabela extends javax.swing.JFrame {
         jmiOutubro = new javax.swing.JMenuItem();
         jmiNovembro = new javax.swing.JMenuItem();
         jmiDezembro = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        jmFerramentas = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jmiExcel = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
@@ -217,6 +221,29 @@ public class FrmTabela extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Welcome");
+
+        javax.swing.GroupLayout jpInicioLayout = new javax.swing.GroupLayout(jpInicio);
+        jpInicio.setLayout(jpInicioLayout);
+        jpInicioLayout.setHorizontalGroup(
+            jpInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpInicioLayout.createSequentialGroup()
+                .addGap(273, 273, 273)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(297, 297, 297))
+        );
+        jpInicioLayout.setVerticalGroup(
+            jpInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpInicioLayout.createSequentialGroup()
+                .addGap(196, 196, 196)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(213, 213, 213))
+        );
+
+        jtpGeral.addTab("Início", jpInicio);
+
         jtTabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -234,12 +261,27 @@ public class FrmTabela extends javax.swing.JFrame {
         jpTabela.setLayout(jpTabelaLayout);
         jpTabelaLayout.setHorizontalGroup(
             jpTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
         );
         jpTabelaLayout.setVerticalGroup(
             jpTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
         );
+
+        jtpGeral.addTab("Tabela", jpTabela);
+
+        javax.swing.GroupLayout jpGraficosLayout = new javax.swing.GroupLayout(jpGraficos);
+        jpGraficos.setLayout(jpGraficosLayout);
+        jpGraficosLayout.setHorizontalGroup(
+            jpGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 652, Short.MAX_VALUE)
+        );
+        jpGraficosLayout.setVerticalGroup(
+            jpGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 434, Short.MAX_VALUE)
+        );
+
+        jtpGeral.addTab("Gráficos", jpGraficos);
 
         jmNovo.setText("Novo");
         jmNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -258,7 +300,7 @@ public class FrmTabela extends javax.swing.JFrame {
 
         jMenuBar1.add(jmNovo);
 
-        jMenu7.setText("Mês");
+        jmMes.setText("Mês");
 
         jmiJunho.setText("Junho");
         jmiJunho.addActionListener(new java.awt.event.ActionListener() {
@@ -266,7 +308,7 @@ public class FrmTabela extends javax.swing.JFrame {
                 jmiJunhoActionPerformed(evt);
             }
         });
-        jMenu7.add(jmiJunho);
+        jmMes.add(jmiJunho);
 
         jmiJulho.setText("Julho");
         jmiJulho.addActionListener(new java.awt.event.ActionListener() {
@@ -274,7 +316,7 @@ public class FrmTabela extends javax.swing.JFrame {
                 jmiJulhoActionPerformed(evt);
             }
         });
-        jMenu7.add(jmiJulho);
+        jmMes.add(jmiJulho);
 
         jmiAgosto.setText("Agosto");
         jmiAgosto.addActionListener(new java.awt.event.ActionListener() {
@@ -282,7 +324,7 @@ public class FrmTabela extends javax.swing.JFrame {
                 jmiAgostoActionPerformed(evt);
             }
         });
-        jMenu7.add(jmiAgosto);
+        jmMes.add(jmiAgosto);
 
         jmiSetembro.setText("Setembro");
         jmiSetembro.addActionListener(new java.awt.event.ActionListener() {
@@ -290,7 +332,7 @@ public class FrmTabela extends javax.swing.JFrame {
                 jmiSetembroActionPerformed(evt);
             }
         });
-        jMenu7.add(jmiSetembro);
+        jmMes.add(jmiSetembro);
 
         jmiOutubro.setText("Outubro");
         jmiOutubro.addActionListener(new java.awt.event.ActionListener() {
@@ -298,7 +340,7 @@ public class FrmTabela extends javax.swing.JFrame {
                 jmiOutubroActionPerformed(evt);
             }
         });
-        jMenu7.add(jmiOutubro);
+        jmMes.add(jmiOutubro);
 
         jmiNovembro.setText("Novembro");
         jmiNovembro.addActionListener(new java.awt.event.ActionListener() {
@@ -306,7 +348,7 @@ public class FrmTabela extends javax.swing.JFrame {
                 jmiNovembroActionPerformed(evt);
             }
         });
-        jMenu7.add(jmiNovembro);
+        jmMes.add(jmiNovembro);
 
         jmiDezembro.setText("Dezembro");
         jmiDezembro.addActionListener(new java.awt.event.ActionListener() {
@@ -314,11 +356,11 @@ public class FrmTabela extends javax.swing.JFrame {
                 jmiDezembroActionPerformed(evt);
             }
         });
-        jMenu7.add(jmiDezembro);
+        jmMes.add(jmiDezembro);
 
-        jMenuBar1.add(jMenu7);
+        jMenuBar1.add(jmMes);
 
-        jMenu1.setText("Ferramentas");
+        jmFerramentas.setText("Ferramentas");
 
         jMenu3.setText("Exportar");
 
@@ -330,7 +372,7 @@ public class FrmTabela extends javax.swing.JFrame {
         });
         jMenu3.add(jmiExcel);
 
-        jMenu1.add(jMenu3);
+        jmFerramentas.add(jMenu3);
 
         jMenu8.setText("Buscar");
 
@@ -366,7 +408,7 @@ public class FrmTabela extends javax.swing.JFrame {
         });
         jMenu8.add(jmiDataNome);
 
-        jMenu1.add(jMenu8);
+        jmFerramentas.add(jMenu8);
 
         jmiRemover.setText("Remover");
         jmiRemover.addActionListener(new java.awt.event.ActionListener() {
@@ -374,7 +416,7 @@ public class FrmTabela extends javax.swing.JFrame {
                 jmiRemoverActionPerformed(evt);
             }
         });
-        jMenu1.add(jmiRemover);
+        jmFerramentas.add(jmiRemover);
 
         jmiEditar.setText("Editar");
         jmiEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -382,9 +424,9 @@ public class FrmTabela extends javax.swing.JFrame {
                 jmiEditarActionPerformed(evt);
             }
         });
-        jMenu1.add(jmiEditar);
+        jmFerramentas.add(jmiEditar);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jmFerramentas);
 
         jmFiltrar.setText("Filtrar");
         jmFiltrar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -421,11 +463,13 @@ public class FrmTabela extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jtpGeral)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jtpGeral)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -616,6 +660,7 @@ public class FrmTabela extends javax.swing.JFrame {
     private void jmiGastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGastoActionPerformed
         FrmInserir fi = new FrmInserir();
         fi.desativarCod();
+        fi.setLocationRelativeTo(null);
         fi.setVisible(true);
     }//GEN-LAST:event_jmiGastoActionPerformed
 
@@ -713,13 +758,12 @@ public class FrmTabela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
@@ -730,7 +774,9 @@ public class FrmTabela extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel jlIcone;
+    private javax.swing.JMenu jmFerramentas;
     private javax.swing.JMenu jmFiltrar;
+    private javax.swing.JMenu jmMes;
     private javax.swing.JMenu jmNovo;
     private javax.swing.JMenu jmSair;
     private javax.swing.JMenuItem jmiAgosto;
@@ -748,7 +794,10 @@ public class FrmTabela extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiPTodos;
     private javax.swing.JMenuItem jmiRemover;
     private javax.swing.JMenuItem jmiSetembro;
+    private javax.swing.JPanel jpGraficos;
+    private javax.swing.JPanel jpInicio;
     private javax.swing.JPanel jpTabela;
     private javax.swing.JTable jtTabela;
+    private javax.swing.JTabbedPane jtpGeral;
     // End of variables declaration//GEN-END:variables
 }
