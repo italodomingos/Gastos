@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -24,6 +25,10 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import model.Gastos;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 
 public class FrmTabela extends javax.swing.JFrame {
 
@@ -35,9 +40,8 @@ public class FrmTabela extends javax.swing.JFrame {
         initComponents();
 
         setExtendedState(MAXIMIZED_BOTH);
-        jtpGeral.setEnabledAt(1, false);
-        jtpGeral.setEnabledAt(2, false);
-
+        //jtpGeral.setEnabledAt(1, false);
+        //jtpGeral.setEnabledAt(2, false);
 
     }
 
@@ -196,6 +200,8 @@ public class FrmTabela extends javax.swing.JFrame {
         jmiEditar = new javax.swing.JMenuItem();
         jmFiltrar = new javax.swing.JMenu();
         jmSair = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         jTextField1.setText("jTextField1");
 
@@ -457,6 +463,18 @@ public class FrmTabela extends javax.swing.JFrame {
         });
         jMenuBar1.add(jmSair);
 
+        jMenu1.setText("Gráfico");
+
+        jMenuItem3.setText("Obter gráfico");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu1);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -715,6 +733,25 @@ public class FrmTabela extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jmFiltrarMousePressed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        DefaultPieDataset dpd = new DefaultPieDataset();
+
+        dpd.setValue("Teste1", 20);
+        dpd.setValue("Teste2", 50);
+        dpd.setValue("Teste3", 30);
+        dpd.setValue("Teste4", 10);
+        dpd.setValue("Teste5", 5);
+
+        JFreeChart jfc = ChartFactory.createPieChart("Gastos", dpd, true, true, false);
+
+        ChartPanel chartPanel = new ChartPanel(jfc);
+
+        jpGraficos.add(chartPanel);
+        jpGraficos.validate();
+
+
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -759,6 +796,7 @@ public class FrmTabela extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -770,6 +808,7 @@ public class FrmTabela extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;

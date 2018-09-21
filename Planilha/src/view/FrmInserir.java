@@ -54,8 +54,6 @@ public class FrmInserir extends javax.swing.JFrame {
         jlCodigo = new javax.swing.JLabel();
         jtfCodigo = new javax.swing.JTextField();
         jbRemover = new javax.swing.JButton();
-        jcbArea = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -145,10 +143,6 @@ public class FrmInserir extends javax.swing.JFrame {
             }
         });
 
-        jcbArea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Lazer", "Restaurante", "Eletronicos", "Automóvel", "Supermecado", "Outro" }));
-
-        jLabel4.setText("Área:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -171,12 +165,7 @@ public class FrmInserir extends javax.swing.JFrame {
                     .addComponent(jlCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtfValor, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jdcData, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -193,9 +182,7 @@ public class FrmInserir extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcbArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
@@ -226,9 +213,7 @@ public class FrmInserir extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfValorKeyPressed
 
     private void jbIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIncluirActionPerformed
-        if ("".equals(jcbArea.getSelectedItem().toString())) {
-            JOptionPane.showMessageDialog(null, "Informe uma área", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
+        
             try {
                 CtrlGambiarra ct = new CtrlGambiarra();
                 Gastos gas = new Gastos();
@@ -252,7 +237,7 @@ public class FrmInserir extends javax.swing.JFrame {
                 e.printStackTrace();
 
             }
-        }
+        
     }//GEN-LAST:event_jbIncluirActionPerformed
 
     private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
@@ -319,13 +304,11 @@ public class FrmInserir extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbAlterar;
     private javax.swing.JButton jbFechar;
     private javax.swing.JButton jbIncluir;
     private javax.swing.JButton jbRemover;
-    private javax.swing.JComboBox<String> jcbArea;
     private com.toedter.calendar.JDateChooser jdcData;
     private javax.swing.JLabel jlCodigo;
     private javax.swing.JLabel jlMes;
