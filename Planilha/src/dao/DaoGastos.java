@@ -338,6 +338,43 @@ public class DaoGastos {
 
         return gas;
     }
+    public Gastos[] getSomaTipos(){
+        Gastos gas[] = {};
+        int x = 1;
+        ConexaoMySql conexao = new ConexaoMySql();
+
+        try {
+            conexao.conectar();
+            String sql = "SELECT ROUND(SUM(valor),2),tipo FROM tabela group by tipo";
+            conexao.executarSQL(sql);
+            while (conexao.getResultSet().next()) {
+                gas = new Gastos[x];
+                x++;
+            }
+            sql = "SELECT ROUND(SUM(valor),2) AS soma,tipo FROM tabela group by tipo";
+            conexao.executarSQL(sql);
+
+            for (int i = 0; conexao.getResultSet().next() == true; i++) {
+
+                gas[i] = new Gastos();
+                
+                gas[i].setTipo(conexao.getResultSet().getString("tipo"));
+                gas[i].setValor(conexao.getResultSet().getFloat("soma"));
+                
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+            conexao.fecharConexao();
+
+        }
+
+        return gas;
+        
+        
+    }
     public float sumGet(String nome) {
 
         ConexaoMySql conexao = new ConexaoMySql();

@@ -90,13 +90,13 @@ public class FrmTeste extends javax.swing.JFrame {
         JFreeChart jfc = ChartFactory.createPieChart("Gastos", dpd, true, true, false);
 
         ChartPanel chartPanel = new ChartPanel(jfc);
+        chartPanel.setSize(600,600);
         jPanel1.add(chartPanel);
+        chartPanel.validate();
         jPanel1.validate();
 
-        ChartFrame cf = new ChartFrame("Teste",jfc);
-        cf.setVisible(true);
-        cf.setSize(500,500);
         
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {

@@ -8,19 +8,19 @@ import javax.swing.JOptionPane;
 import model.Gastos;
 
 public class FrmInserir extends javax.swing.JFrame {
-
+    
     public FrmInserir() {
         initComponents();
     }
-
+    
     public void desativarCod() {
         jtfCodigo.setVisible(false);
         jlCodigo.setVisible(false);
         jbAlterar.setVisible(false);
         jbRemover.setVisible(false);
-
+        
     }
-
+    
     public void preencherAlterar(int cod) throws ParseException {
         CtrlGambiarra ct = new CtrlGambiarra();
         Gastos g = ct.getPorCod(cod);
@@ -33,9 +33,28 @@ public class FrmInserir extends javax.swing.JFrame {
         jlCodigo.setVisible(true);
         jbIncluir.setVisible(false);
         jbAlterar.setVisible(true);
-        jbRemover.setVisible(true);
+        jbRemover.setVisible(false);
     }
 
+    public void preencherRemover(int cod) throws ParseException {
+        CtrlGambiarra ct = new CtrlGambiarra();
+        Gastos g = ct.getPorCod(cod);
+        jtfTipo.setText(g.getTipo());
+        jdcData.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(g.getData()));
+        jtfValor.setText(String.valueOf(g.getValor()));
+        jtfCodigo.setText(String.valueOf(cod));
+        jtfCodigo.setEditable(false);
+        jtfCodigo.setVisible(true);
+        jlCodigo.setVisible(true);
+        jbIncluir.setVisible(false);
+        jbAlterar.setVisible(false);
+        jbRemover.setVisible(true);
+        jtfTipo.setEditable(false);
+        jtfValor.setEditable(false);
+        jdcData.setEnabled(false);
+        
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -214,29 +233,29 @@ public class FrmInserir extends javax.swing.JFrame {
 
     private void jbIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIncluirActionPerformed
         
-            try {
-                CtrlGambiarra ct = new CtrlGambiarra();
-                Gastos gas = new Gastos();
-
-                SimpleDateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
-                String data = formato.format(jdcData.getDate());
-
-                gas.setData(data);
-                gas.setTipo(jtfTipo.getText());
-
-                gas.setValor(Float.parseFloat(jtfValor.getText().replace(',', '.')));
-
-                ct.salvarCtrl(gas);
-                jdcData.setDate(null);
-                jtfTipo.setText(null);
-                jtfValor.setText(null);
-                jtfTipo.requestFocus();
-
-                JOptionPane.showMessageDialog(null, "Salvo com sucesso");
-            } catch (Exception e) {
-                e.printStackTrace();
-
-            }
+        try {
+            CtrlGambiarra ct = new CtrlGambiarra();
+            Gastos gas = new Gastos();
+            
+            SimpleDateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
+            String data = formato.format(jdcData.getDate());
+            
+            gas.setData(data);
+            gas.setTipo(jtfTipo.getText());
+            
+            gas.setValor(Float.parseFloat(jtfValor.getText().replace(',', '.')));
+            
+            ct.salvarCtrl(gas);
+            jdcData.setDate(null);
+            jtfTipo.setText(null);
+            jtfValor.setText(null);
+            jtfTipo.requestFocus();
+            
+            JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+        }
         
     }//GEN-LAST:event_jbIncluirActionPerformed
 
@@ -244,23 +263,23 @@ public class FrmInserir extends javax.swing.JFrame {
         CtrlGambiarra ct = new CtrlGambiarra();
         Gastos gas = new Gastos();
         FrmTabela ft = new FrmTabela();
-
+        
         gas.setCodigo(Integer.parseInt(jtfCodigo.getText()));
         gas.setTipo(jtfTipo.getText());
         gas.setValor(Float.parseFloat(jtfValor.getText()));
-
+        
         SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
         String data = formato.format(jdcData.getDate());
-
+        
         gas.setData(data);
         ct.updateCtrl(gas);
         if (ct.updateCtrl(gas) == true) {
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
             ft.preencher(ct.getAll());
-
+            
         } else {
             JOptionPane.showMessageDialog(null, "Erro");
-
+            
         }
 
     }//GEN-LAST:event_jbAlterarActionPerformed
@@ -276,14 +295,14 @@ public class FrmInserir extends javax.swing.JFrame {
     private void jtfTipoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTipoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jdcData.requestFocus();
-
+            
         }
     }//GEN-LAST:event_jtfTipoKeyPressed
 
     private void jdcDataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jdcDataKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jtfValor.requestFocus();
-
+            
         }
     }//GEN-LAST:event_jdcDataKeyPressed
 
@@ -298,7 +317,6 @@ public class FrmInserir extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jbRemoverActionPerformed
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

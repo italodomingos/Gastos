@@ -7,6 +7,7 @@ import control.Verificacao;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import static java.lang.Thread.sleep;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -38,10 +39,29 @@ public class FrmTabela extends javax.swing.JFrame {
     public FrmTabela() {
 
         initComponents();
+        new Thread() {
+            public void run() {
+                int x = 400;
+                int y = jlWelcome.getLocation().y;
 
+                while (true) {
+                    x--;
+                    if (x < -100) {
+                        x = 400;
+                    }
+                    jlWelcome.setLocation(x, y);
+                    try {
+                        sleep(10);
+                    } catch (Exception e) {
+
+                    }
+
+                }
+
+            }
+
+        }.start();
         setExtendedState(MAXIMIZED_BOTH);
-        //jtpGeral.setEnabledAt(1, false);
-        //jtpGeral.setEnabledAt(2, false);
 
     }
 
@@ -91,6 +111,23 @@ public class FrmTabela extends javax.swing.JFrame {
 
     }
 
+    public void preencherGrafico(Gastos[] g) {
+        DefaultPieDataset dpd = new DefaultPieDataset();
+
+        for (int i = 0; i < g.length; i++) {
+            dpd.setValue(g[i].getTipo(), g[i].getValor());
+        }
+
+        JFreeChart jfc = ChartFactory.createPieChart("Gastos", dpd, true, true, false);
+
+        ChartPanel chartPanel = new ChartPanel(jfc);
+        chartPanel.setSize(600, 600);
+        jpGraficos.add(chartPanel);
+        chartPanel.validate();
+        jpGraficos.validate();
+
+    }
+
     public void preencher(Gastos[] g) {
         float soma = 0;
 
@@ -115,13 +152,13 @@ public class FrmTabela extends javax.swing.JFrame {
         }
         help.setSoma(soma);
         modelo.addRow(new Object[]{"Total", "", "R$ " + soma});
+        jtpGeral.setSelectedIndex(1);
 
     }
 
     public void setarData(String data1, String data2) {
         CtrlGambiarra ct = new CtrlGambiarra();
         preencher(ct.getCtrl(data1, data2));
-        jtTabela.setVisible(true);
 
     }
 
@@ -172,7 +209,7 @@ public class FrmTabela extends javax.swing.JFrame {
         jlIcone = new javax.swing.JLabel();
         jtpGeral = new javax.swing.JTabbedPane();
         jpInicio = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jlWelcome = new javax.swing.JLabel();
         jpTabela = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtTabela = new javax.swing.JTable();
@@ -200,8 +237,6 @@ public class FrmTabela extends javax.swing.JFrame {
         jmiEditar = new javax.swing.JMenuItem();
         jmFiltrar = new javax.swing.JMenu();
         jmSair = new javax.swing.JMenu();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
 
         jTextField1.setText("jTextField1");
 
@@ -227,9 +262,9 @@ public class FrmTabela extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Welcome");
+        jlWelcome.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jlWelcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlWelcome.setText("Welcome");
 
         javax.swing.GroupLayout jpInicioLayout = new javax.swing.GroupLayout(jpInicio);
         jpInicio.setLayout(jpInicioLayout);
@@ -237,14 +272,14 @@ public class FrmTabela extends javax.swing.JFrame {
             jpInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpInicioLayout.createSequentialGroup()
                 .addGap(273, 273, 273)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jlWelcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(297, 297, 297))
         );
         jpInicioLayout.setVerticalGroup(
             jpInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpInicioLayout.createSequentialGroup()
                 .addGap(196, 196, 196)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jlWelcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(213, 213, 213))
         );
 
@@ -463,18 +498,6 @@ public class FrmTabela extends javax.swing.JFrame {
         });
         jMenuBar1.add(jmSair);
 
-        jMenu1.setText("Gráfico");
-
-        jMenuItem3.setText("Obter gráfico");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem3);
-
-        jMenuBar1.add(jMenu1);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -494,7 +517,27 @@ public class FrmTabela extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRemoverActionPerformed
+        CtrlGambiarra ct = new CtrlGambiarra();
+        preencher(ct.getAll());
+        JOptionPane.showMessageDialog(null, "Pressione um registro para remové-lo");
+        jtTabela.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                if (jtTabela.getSelectedRow() > -1) {
 
+                    try {
+                        FrmInserir fi = new FrmInserir();
+                        fi.preencherRemover((int) jtTabela.getValueAt(jtTabela.getSelectedRow(), 0));
+                        fi.setVisible(true);
+                        jtTabela.getSelectionModel().removeListSelectionListener(this);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(FrmTabela.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+
+            }
+        });
 
     }//GEN-LAST:event_jmiRemoverActionPerformed
 
@@ -564,6 +607,7 @@ public class FrmTabela extends javax.swing.JFrame {
     private void jmiPTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPTodosActionPerformed
         CtrlGambiarra ct = new CtrlGambiarra();
         preencher(ct.getAll());
+        preencherGrafico(ct.getAll());
 
 
     }//GEN-LAST:event_jmiPTodosActionPerformed
@@ -733,25 +777,6 @@ public class FrmTabela extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jmFiltrarMousePressed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        DefaultPieDataset dpd = new DefaultPieDataset();
-
-        dpd.setValue("Teste1", 20);
-        dpd.setValue("Teste2", 50);
-        dpd.setValue("Teste3", 30);
-        dpd.setValue("Teste4", 10);
-        dpd.setValue("Teste5", 5);
-
-        JFreeChart jfc = ChartFactory.createPieChart("Gastos", dpd, true, true, false);
-
-        ChartPanel chartPanel = new ChartPanel(jfc);
-
-        jpGraficos.add(chartPanel);
-        jpGraficos.validate();
-
-
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -795,8 +820,6 @@ public class FrmTabela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -808,11 +831,11 @@ public class FrmTabela extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel jlIcone;
+    private javax.swing.JLabel jlWelcome;
     private javax.swing.JMenu jmFerramentas;
     private javax.swing.JMenu jmFiltrar;
     private javax.swing.JMenu jmMes;
