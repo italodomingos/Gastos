@@ -1,6 +1,6 @@
 package view;
 
-import control.CtrlGambiarra;
+import control.CtrlGastos;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,21 +8,21 @@ import javax.swing.JOptionPane;
 import model.Gastos;
 
 public class FrmInserir extends javax.swing.JFrame {
-    
+
     public FrmInserir() {
         initComponents();
     }
-    
+
     public void desativarCod() {
         jtfCodigo.setVisible(false);
         jlCodigo.setVisible(false);
         jbAlterar.setVisible(false);
         jbRemover.setVisible(false);
-        
+
     }
-    
+
     public void preencherAlterar(int cod) throws ParseException {
-        CtrlGambiarra ct = new CtrlGambiarra();
+        CtrlGastos ct = new CtrlGastos();
         Gastos g = ct.getPorCod(cod);
         jtfTipo.setText(g.getTipo());
         jdcData.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(g.getData()));
@@ -37,7 +37,7 @@ public class FrmInserir extends javax.swing.JFrame {
     }
 
     public void preencherRemover(int cod) throws ParseException {
-        CtrlGambiarra ct = new CtrlGambiarra();
+        CtrlGastos ct = new CtrlGastos();
         Gastos g = ct.getPorCod(cod);
         jtfTipo.setText(g.getTipo());
         jdcData.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(g.getData()));
@@ -52,13 +52,14 @@ public class FrmInserir extends javax.swing.JFrame {
         jtfTipo.setEditable(false);
         jtfValor.setEditable(false);
         jdcData.setEnabled(false);
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel4 = new javax.swing.JLabel();
         jbFechar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jlMes = new javax.swing.JLabel();
@@ -73,6 +74,10 @@ public class FrmInserir extends javax.swing.JFrame {
         jlCodigo = new javax.swing.JLabel();
         jtfCodigo = new javax.swing.JTextField();
         jbRemover = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jcbArea = new javax.swing.JComboBox<>();
+
+        jLabel4.setText("jLabel4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -105,7 +110,7 @@ public class FrmInserir extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        jLabel1.setText("Tipo");
+        jLabel1.setText("Tipo:");
 
         jLabel2.setText("Data:");
 
@@ -162,6 +167,10 @@ public class FrmInserir extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Área:");
+
+        jcbArea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolha uma área", "Refeição", "Combustivel", "Supermercado", "Transporte", "Ecommerce", "Lazer", "IOF", "Juros", "Hinode" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -184,7 +193,12 @@ public class FrmInserir extends javax.swing.JFrame {
                     .addComponent(jlCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcbArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jtfValor, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jdcData, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -201,7 +215,9 @@ public class FrmInserir extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jcbArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
@@ -232,54 +248,60 @@ public class FrmInserir extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfValorKeyPressed
 
     private void jbIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIncluirActionPerformed
-        
+
         try {
-            CtrlGambiarra ct = new CtrlGambiarra();
-            Gastos gas = new Gastos();
-            
-            SimpleDateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
-            String data = formato.format(jdcData.getDate());
-            
-            gas.setData(data);
-            gas.setTipo(jtfTipo.getText());
-            
-            gas.setValor(Float.parseFloat(jtfValor.getText().replace(',', '.')));
-            
-            ct.salvarCtrl(gas);
-            jdcData.setDate(null);
-            jtfTipo.setText(null);
-            jtfValor.setText(null);
-            jtfTipo.requestFocus();
-            
-            JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+            if (!jcbArea.getSelectedItem().toString().equals("Escolha uma área")) {
+                CtrlGastos ct = new CtrlGastos();
+                Gastos gas = new Gastos();
+
+                SimpleDateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
+                String data = formato.format(jdcData.getDate());
+
+                gas.setData(data);
+                gas.setTipo(jtfTipo.getText());
+
+                gas.setValor(Float.parseFloat(jtfValor.getText().replace(',', '.')));
+                gas.setArea(jcbArea.getSelectedItem().toString());
+
+                ct.salvarCtrl(gas);
+                jdcData.setDate(null);
+                jtfTipo.setText(null);
+                jtfValor.setText(null);
+                jtfTipo.requestFocus();
+
+                JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+            } else {
+                JOptionPane.showMessageDialog(null, "informe uma área");
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
-        
+
     }//GEN-LAST:event_jbIncluirActionPerformed
 
     private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
-        CtrlGambiarra ct = new CtrlGambiarra();
+        CtrlGastos ct = new CtrlGastos();
         Gastos gas = new Gastos();
         FrmTabela ft = new FrmTabela();
-        
+
         gas.setCodigo(Integer.parseInt(jtfCodigo.getText()));
         gas.setTipo(jtfTipo.getText());
         gas.setValor(Float.parseFloat(jtfValor.getText()));
-        
+
         SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
         String data = formato.format(jdcData.getDate());
-        
         gas.setData(data);
+        gas.setArea(jcbArea.getSelectedItem().toString());
         ct.updateCtrl(gas);
         if (ct.updateCtrl(gas) == true) {
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
             ft.preencher(ct.getAll());
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Erro");
-            
+
         }
 
     }//GEN-LAST:event_jbAlterarActionPerformed
@@ -295,19 +317,19 @@ public class FrmInserir extends javax.swing.JFrame {
     private void jtfTipoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTipoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jdcData.requestFocus();
-            
+
         }
     }//GEN-LAST:event_jtfTipoKeyPressed
 
     private void jdcDataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jdcDataKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jtfValor.requestFocus();
-            
+
         }
     }//GEN-LAST:event_jdcDataKeyPressed
 
     private void jbRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRemoverActionPerformed
-        CtrlGambiarra ct = new CtrlGambiarra();
+        CtrlGastos ct = new CtrlGastos();
         String opc[] = {"Sim", "Não"};
         int x = JOptionPane.showOptionDialog(null, "Deseja remover o Código " + jtfCodigo.getText(),
                 "Você tem certeza disso?", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opc, opc[0]);
@@ -322,11 +344,14 @@ public class FrmInserir extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbAlterar;
     private javax.swing.JButton jbFechar;
     private javax.swing.JButton jbIncluir;
     private javax.swing.JButton jbRemover;
+    private javax.swing.JComboBox<String> jcbArea;
     private com.toedter.calendar.JDateChooser jdcData;
     private javax.swing.JLabel jlCodigo;
     private javax.swing.JLabel jlMes;

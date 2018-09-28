@@ -3,13 +3,10 @@ package control;
 import dao.DaoGastos;
 import model.Gastos;
 
-public class CtrlGambiarra {
-
-    float soma = 0;
-    
-    
+public class CtrlGastos {
 
     public int salvarCtrl(Gastos gas) {
+
         return new DaoGastos().salvarDao(gas);
 
     }
@@ -30,10 +27,6 @@ public class CtrlGambiarra {
         return new DaoGastos().getPorDataNome(data1, data2, tipo);
     }
 
-    public float somaCtrl(String data1, String data2, String nome) {
-        return new DaoGastos().somaConsulta(data1, data2, nome);
-    }
-
     public Gastos[] getCtrlNome(String tipo) {
         return new DaoGastos().getPorNome(tipo);
     }
@@ -50,16 +43,8 @@ public class CtrlGambiarra {
         return new DaoGastos().getFiltros();
     }
 
-    public float sumGet(String nome) {
-        return new DaoGastos().sumGet(nome);
-    }
-
-    public float getSoma() {
-        return soma;
-    }
-
-    public void setSoma(float soma) {
-        this.soma = soma;
+    public Gastos[] getCtrlSomaTipos() {
+        return new DaoGastos().getSomaTipos();
     }
 
 }

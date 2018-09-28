@@ -5,7 +5,8 @@ public class Gastos {
     private String tipo;
     private int codigo;
     private float valor,soma;
-    private String data, mes;
+    private String data, mes,area;
+    
 
     public Gastos() {
 
@@ -16,6 +17,22 @@ public class Gastos {
         this.tipo = tipo;
         this.codigo = codigo;
         this.valor = valor;
+    }
+
+    public float getSoma() {
+        return soma;
+    }
+
+    public void setSoma(float soma) {
+        this.soma = soma;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public String getData() {

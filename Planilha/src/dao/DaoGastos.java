@@ -58,7 +58,10 @@ public class DaoGastos {
         try {
             conexao.conectar();
 
-            String sql = "UPDATE tabela SET valor= " + gas.getValor() + ",tipo ='" + gas.getTipo() + "',calendario='" + gas.getData()
+            String sql = "UPDATE tabela SET valor= " + gas.getValor()
+                    + ",tipo ='" + gas.getTipo()
+                    + "',calendario='" + gas.getData()
+                    + "',areaTipo='" + gas.getArea()
                     + "' WHERE codigo = " + gas.getCodigo() + ";";
             conexao.executarUpdateDeleteSQL(sql);
 
@@ -71,33 +74,6 @@ public class DaoGastos {
         } finally {
             conexao.fecharConexao();
         }
-
-    }
-
-    public float somaConsulta(String data1, String data2, String nome) {
-
-        ConexaoMySql conexao = new ConexaoMySql();
-        float soma = 0;
-
-        try {
-            conexao.conectar();
-
-            String sql = "SELECT SUM(valor) AS total FROM tabela  WHERE calendario BETWEEN '" + data1 + "' AND '" + data2 + "'and tipo = '" + nome + "';";
-            conexao.executarSQL(sql);
-
-            while (conexao.getResultSet().next()) {
-
-                soma = conexao.getResultSet().getFloat("total");
-
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            conexao.fecharConexao();
-        }
-        return soma;
 
     }
 
@@ -126,7 +102,7 @@ public class DaoGastos {
                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
                 String datas = formato.format(data);
 
-                gas[i].setData(conexao.getResultSet().getString("calendario"));
+                gas[i].setData(datas);
                 gas[i].setTipo(conexao.getResultSet().getString("tipo"));
                 gas[i].setValor(conexao.getResultSet().getFloat("valor"));
 
@@ -168,7 +144,7 @@ public class DaoGastos {
                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
                 String datas = formato.format(data);
 
-                gas[i].setData(conexao.getResultSet().getString("calendario"));
+                gas[i].setData(datas);
                 gas[i].setTipo(conexao.getResultSet().getString("tipo"));
                 gas[i].setValor(conexao.getResultSet().getFloat("valor"));
 
@@ -201,8 +177,8 @@ public class DaoGastos {
                 Date data = conexao.getResultSet().getDate("calendario");
                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
                 String datas = formato.format(data);
-                gas.setData(datas);
 
+                gas.setData(datas);
                 gas.setTipo(conexao.getResultSet().getString("tipo"));
                 gas.setValor(conexao.getResultSet().getFloat("valor"));
             }
@@ -323,9 +299,9 @@ public class DaoGastos {
             for (int i = 0; conexao.getResultSet().next() == true; i++) {
 
                 gas[i] = new Gastos();
-                
+
                 gas[i].setTipo(conexao.getResultSet().getString("tipo"));
-                
+
             }
 
         } catch (Exception e) {
@@ -338,7 +314,8 @@ public class DaoGastos {
 
         return gas;
     }
-    public Gastos[] getSomaTipos(){
+
+    public Gastos[] getSomaTipos() {
         Gastos gas[] = {};
         int x = 1;
         ConexaoMySql conexao = new ConexaoMySql();
@@ -357,10 +334,10 @@ public class DaoGastos {
             for (int i = 0; conexao.getResultSet().next() == true; i++) {
 
                 gas[i] = new Gastos();
-                
+
                 gas[i].setTipo(conexao.getResultSet().getString("tipo"));
                 gas[i].setValor(conexao.getResultSet().getFloat("soma"));
-                
+
             }
 
         } catch (Exception e) {
@@ -372,33 +349,6 @@ public class DaoGastos {
         }
 
         return gas;
-        
-        
-    }
-    public float sumGet(String nome) {
-
-        ConexaoMySql conexao = new ConexaoMySql();
-        float soma = 0;
-
-        try {
-            conexao.conectar();
-
-            String sql = "SELECT SUM(valor) AS total FROM tabela  WHERE tipo ='"+nome+"';";
-            conexao.executarSQL(sql);
-
-            while (conexao.getResultSet().next()) {
-
-                soma = conexao.getResultSet().getFloat("total");
-
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            conexao.fecharConexao();
-        }
-        return soma;
 
     }
 

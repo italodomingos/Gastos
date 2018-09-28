@@ -1,7 +1,8 @@
 package view;
 
 import com.toedter.calendar.JDateChooser;
-import control.CtrlGambiarra;
+import control.CtrlGastos;
+import control.Ferramentas;
 import control.Helper;
 import control.Verificacao;
 import java.io.File;
@@ -10,7 +11,6 @@ import java.io.IOException;
 import static java.lang.Thread.sleep;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -62,56 +62,13 @@ public class FrmTabela extends javax.swing.JFrame {
 
         }.start();
         setExtendedState(MAXIMIZED_BOTH);
-
-    }
-
-    public float removerRegistrosTabela(DefaultTableModel model, String nome) {
-        int cont = 0, start = 0;
-
-        float soma = 0;
-        int limit = model.getRowCount();
-        for (int i = 0; i < limit; i++) {
-            if (model.getValueAt(i, 1).toString().equalsIgnoreCase(nome)) {
-                start = i;
-                break;
-            }
-        }
-        for (int i = start; i < limit; i++) {
-            if (model.getValueAt(i, 1).toString().equalsIgnoreCase(nome)) {
-                soma = soma + Float.parseFloat(model.getValueAt(i, 2).toString().replace("R$", ""));
-                cont++;
-
-            }
-        }
-        for (int i = 0; i < limit; i++) {
-
-            if (model.getValueAt(i, 0).toString().equalsIgnoreCase("Total")) {
-
-                model.removeRow(i);
-            }
-
-        }
-        for (int i = 0; i < cont; i++) {
-
-            model.removeRow(start);
-
-        }
-
-        return soma;
-
-    }
-
-    public boolean percorrerTabela(DefaultTableModel model, String nome) {
-        for (int i = 0; i < model.getRowCount() - 1; i++) {
-            if (model.getValueAt(i, 1).toString().equals(nome)) {
-                return false;
-            }
-        }
-        return true;
+        jtpGeral.setEnabledAt(1, false);
+        jtpGeral.setEnabledAt(2, false);
 
     }
 
     public void preencherGrafico(Gastos[] g) {
+        jtpGeral.setEnabledAt(2, true);
         DefaultPieDataset dpd = new DefaultPieDataset();
 
         for (int i = 0; i < g.length; i++) {
@@ -129,6 +86,8 @@ public class FrmTabela extends javax.swing.JFrame {
     }
 
     public void preencher(Gastos[] g) {
+        jtpGeral.setEnabledAt(1, true);
+
         float soma = 0;
 
         DefaultTableModel modelo = new DefaultTableModel();
@@ -138,15 +97,17 @@ public class FrmTabela extends javax.swing.JFrame {
         modelo.addColumn("Tipo");
         modelo.addColumn("Valor");
         modelo.addColumn("Data");
+        modelo.addColumn("Área");
 
         jtTabela.getColumnModel().getColumn(0);
         jtTabela.getColumnModel().getColumn(1);
         jtTabela.getColumnModel().getColumn(2);
         jtTabela.getColumnModel().getColumn(3);
+        jtTabela.getColumnModel().getColumn(4);
 
         for (int i = 0; i < g.length; i++) {
 
-            modelo.addRow(new Object[]{g[i].getCodigo(), g[i].getTipo(), "R$ " + g[i].getValor(), g[i].getData().replace('-', '/')});
+            modelo.addRow(new Object[]{g[i].getCodigo(), g[i].getTipo(), "R$ " + g[i].getValor(), g[i].getData().replace('-', '/'), g[i].getArea()});
             soma = soma + g[i].getValor();
 
         }
@@ -157,39 +118,9 @@ public class FrmTabela extends javax.swing.JFrame {
     }
 
     public void setarData(String data1, String data2) {
-        CtrlGambiarra ct = new CtrlGambiarra();
+        CtrlGastos ct = new CtrlGastos();
         preencher(ct.getCtrl(data1, data2));
 
-    }
-
-    public void toExcel(JTable table, File file) throws IOException {
-        try {
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-
-            FileWriter excel = new FileWriter(file);
-            for (int i = 0; i < model.getColumnCount(); i++) {
-
-                excel.write(model.getColumnName(i).replace('ó', 'o') + ";");
-            }
-            excel.write("\n");
-            for (int i = 0; i < model.getRowCount(); i++) {
-                for (int j = 0; j < model.getColumnCount(); j++) {
-                    if (j == 2) {
-                        excel.write(model.getValueAt(i, j).toString().replace('.', ',') + ";");
-                    } else {
-                        excel.write(model.getValueAt(i, j) + ";");
-
-                    }
-
-                }
-                excel.write("\n");
-            }
-            excel.close();
-            JOptionPane.showMessageDialog(null, "Salvo em: " + file);
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -325,11 +256,6 @@ public class FrmTabela extends javax.swing.JFrame {
         jtpGeral.addTab("Gráficos", jpGraficos);
 
         jmNovo.setText("Novo");
-        jmNovo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmNovoActionPerformed(evt);
-            }
-        });
 
         jmiGasto.setText("Gasto");
         jmiGasto.addActionListener(new java.awt.event.ActionListener() {
@@ -475,25 +401,12 @@ public class FrmTabela extends javax.swing.JFrame {
                 jmFiltrarMousePressed(evt);
             }
         });
-        jmFiltrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmFiltrarActionPerformed(evt);
-            }
-        });
         jMenuBar1.add(jmFiltrar);
 
         jmSair.setText("Sair");
         jmSair.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jmSairMouseClicked(evt);
-            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jmSairMousePressed(evt);
-            }
-        });
-        jmSair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmSairActionPerformed(evt);
             }
         });
         jMenuBar1.add(jmSair);
@@ -517,7 +430,7 @@ public class FrmTabela extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRemoverActionPerformed
-        CtrlGambiarra ct = new CtrlGambiarra();
+        CtrlGastos ct = new CtrlGastos();
         preencher(ct.getAll());
         JOptionPane.showMessageDialog(null, "Pressione um registro para remové-lo");
         jtTabela.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -554,14 +467,6 @@ public class FrmTabela extends javax.swing.JFrame {
         String d[] = v.verData("Dezembro");
         setarData(d[0], d[1]);
     }//GEN-LAST:event_jmiDezembroActionPerformed
-
-    private void jmSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmSairActionPerformed
-
-    }//GEN-LAST:event_jmSairActionPerformed
-
-    private void jmSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmSairMouseClicked
-
-    }//GEN-LAST:event_jmSairMouseClicked
 
     private void jmiJulhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiJulhoActionPerformed
 
@@ -605,35 +510,35 @@ public class FrmTabela extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiNovembroActionPerformed
 
     private void jmiPTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPTodosActionPerformed
-        CtrlGambiarra ct = new CtrlGambiarra();
+        CtrlGastos ct = new CtrlGastos();
         preencher(ct.getAll());
-        preencherGrafico(ct.getAll());
+        preencherGrafico(ct.getCtrlSomaTipos());
 
 
     }//GEN-LAST:event_jmiPTodosActionPerformed
 
     private void jmiEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditarActionPerformed
-        CtrlGambiarra ct = new CtrlGambiarra();
+        CtrlGastos ct = new CtrlGastos();
         preencher(ct.getAll());
         JOptionPane.showMessageDialog(null, "Pressione um registro para alterá-lo");
         jtTabela.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (jtTabela.getSelectedRow() > -1) {
-                    String opc[] = {"Sim", "Não"};
+                    /* String opc[] = {"Sim", "Não"};
                     int x = JOptionPane.showOptionDialog(null, "Deseja editar o Código " + jtTabela.getValueAt(jtTabela.getSelectedRow(), 0),
                             "Você tem certeza disso?", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opc, opc[0]);
-                    if (x == 0) {
-                        FrmInserir fi = new FrmInserir();
-                        try {
-                            fi.preencherAlterar((int) jtTabela.getValueAt(jtTabela.getSelectedRow(), 0));
-                            fi.setVisible(true);
-                            jtTabela.getSelectionModel().removeListSelectionListener(this);
-                        } catch (ParseException ex) {
-                            Logger.getLogger(FrmTabela.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-
+                    if (x == 0) {*/
+                    FrmInserir fi = new FrmInserir();
+                    try {
+                        fi.preencherAlterar((int) jtTabela.getValueAt(jtTabela.getSelectedRow(), 0));
+                        fi.setVisible(true);
+                        //jtTabela.getSelectionModel().removeListSelectionListener(this);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(FrmTabela.class.getName()).log(Level.SEVERE, null, ex);
                     }
+
+                    // }
                 }
 
             }
@@ -642,7 +547,7 @@ public class FrmTabela extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiEditarActionPerformed
 
     private void jmiPDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPDataActionPerformed
-        CtrlGambiarra ct = new CtrlGambiarra();
+        CtrlGastos ct = new CtrlGastos();
         JDateChooser jd1 = new JDateChooser();
         JDateChooser jd2 = new JDateChooser();
 
@@ -660,13 +565,14 @@ public class FrmTabela extends javax.swing.JFrame {
     private void jmiPNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPNomeActionPerformed
 
         String nome = JOptionPane.showInputDialog("Informe um nome");
-        CtrlGambiarra ct = new CtrlGambiarra();
+        CtrlGastos ct = new CtrlGastos();
 
         preencher(ct.getCtrlNome(nome));
     }//GEN-LAST:event_jmiPNomeActionPerformed
 
     private void jmiExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExcelActionPerformed
         JFileChooser fc = new JFileChooser();
+        Ferramentas f = new Ferramentas();
 
         if (jtTabela.getValueAt(1, 1) != null) {
             FileNameExtensionFilter ff = new FileNameExtensionFilter("Xlsx, Xls, Csv", "csv", "xls", "xlsx");
@@ -689,7 +595,7 @@ public class FrmTabela extends javax.swing.JFrame {
                     file = path + "\\" + filename + ".csv";
                 }
                 try {
-                    toExcel(jtTabela, new File(file));
+                    f.toExcel(jtTabela, new File(file));
                 } catch (IOException ex) {
                     Logger.getLogger(FrmTabela.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -700,7 +606,7 @@ public class FrmTabela extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiExcelActionPerformed
 
     private void jmiDataNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDataNomeActionPerformed
-        CtrlGambiarra ct = new CtrlGambiarra();
+        CtrlGastos ct = new CtrlGastos();
         JDateChooser jd1 = new JDateChooser();
         JDateChooser jd2 = new JDateChooser();
         JTextField jt = new JTextField();
@@ -715,10 +621,6 @@ public class FrmTabela extends javax.swing.JFrame {
         preencher(ct.getCtrlDataNome(data1, data2, nome));
     }//GEN-LAST:event_jmiDataNomeActionPerformed
 
-    private void jmNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmNovoActionPerformed
-
-    }//GEN-LAST:event_jmNovoActionPerformed
-
     private void jmiGastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGastoActionPerformed
         FrmInserir fi = new FrmInserir();
         fi.desativarCod();
@@ -726,13 +628,10 @@ public class FrmTabela extends javax.swing.JFrame {
         fi.setVisible(true);
     }//GEN-LAST:event_jmiGastoActionPerformed
 
-    private void jmFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmFiltrarActionPerformed
-
-    }//GEN-LAST:event_jmFiltrarActionPerformed
-
     private void jmFiltrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmFiltrarMousePressed
-        CtrlGambiarra ct = new CtrlGambiarra();
+        CtrlGastos ct = new CtrlGastos();
         JComboBox jc = new JComboBox();
+        Ferramentas f = new Ferramentas();
         Gastos[] gas = ct.getFiltros();
         float soma = 0;
         int cont = 0;
@@ -750,7 +649,7 @@ public class FrmTabela extends javax.swing.JFrame {
         if (x == 0) {
             preencher(ct.getCtrlNome(jc.getSelectedItem().toString()));
 
-        } else if (percorrerTabela(modelo, jc.getSelectedItem().toString()) == true) {
+        } else if (f.percorrerTabela(modelo, jc.getSelectedItem().toString()) == true) {
             soma = Float.parseFloat(modelo.getValueAt(modelo.getRowCount() - 1, 2).toString().replace("R$", ""));
 
             modelo.removeRow(modelo.getRowCount() - 1);
@@ -764,7 +663,7 @@ public class FrmTabela extends javax.swing.JFrame {
 
         } else if (x == 2) {
 
-            help.setSoma(help.getSoma() - removerRegistrosTabela(modelo, jc.getSelectedItem().toString()));
+            help.setSoma(help.getSoma() - f.removerRegistrosTabela(modelo, jc.getSelectedItem().toString()));
 
             modelo.addRow(new Object[]{"Total", "", "R$ " + help.getSoma()});
 
