@@ -28,6 +28,7 @@ public class FrmInserir extends javax.swing.JFrame {
         jdcData.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(g.getData()));
         jtfValor.setText(String.valueOf(g.getValor()));
         jtfCodigo.setText(String.valueOf(cod));
+        jcbArea.setSelectedItem(g.getArea());
         jtfCodigo.setEditable(false);
         jtfCodigo.setVisible(true);
         jlCodigo.setVisible(true);
@@ -43,6 +44,7 @@ public class FrmInserir extends javax.swing.JFrame {
         jdcData.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(g.getData()));
         jtfValor.setText(String.valueOf(g.getValor()));
         jtfCodigo.setText(String.valueOf(cod));
+        jcbArea.setSelectedItem(g.getArea());
         jtfCodigo.setEditable(false);
         jtfCodigo.setVisible(true);
         jlCodigo.setVisible(true);
@@ -52,6 +54,7 @@ public class FrmInserir extends javax.swing.JFrame {
         jtfTipo.setEditable(false);
         jtfValor.setEditable(false);
         jdcData.setEnabled(false);
+        jcbArea.setEnabled(false);
 
     }
 
@@ -76,6 +79,7 @@ public class FrmInserir extends javax.swing.JFrame {
         jbRemover = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jcbArea = new javax.swing.JComboBox<>();
+        jbNext = new javax.swing.JButton();
 
         jLabel4.setText("jLabel4");
 
@@ -116,22 +120,12 @@ public class FrmInserir extends javax.swing.JFrame {
 
         jLabel3.setText("Valor:");
 
-        jtfTipo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfTipoActionPerformed(evt);
-            }
-        });
         jtfTipo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtfTipoKeyPressed(evt);
             }
         });
 
-        jtfValor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfValorActionPerformed(evt);
-            }
-        });
         jtfValor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtfValorKeyPressed(evt);
@@ -171,6 +165,13 @@ public class FrmInserir extends javax.swing.JFrame {
 
         jcbArea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolha uma área", "Refeição", "Combustivel", "Supermercado", "Transporte", "Ecommerce", "Lazer", "IOF", "Juros", "Hinode" }));
 
+        jbNext.setText(">");
+        jbNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNextActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -194,15 +195,20 @@ public class FrmInserir extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jtfValor, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jdcData, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcbArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtfValor, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(127, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jdcData, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbNext))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,12 +227,13 @@ public class FrmInserir extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
-                    .addComponent(jdcData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jdcData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbNext))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jtfValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbIncluir)
                     .addComponent(jbFechar)
@@ -238,6 +245,7 @@ public class FrmInserir extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
+
         dispose();
     }//GEN-LAST:event_jbFecharActionPerformed
 
@@ -294,25 +302,19 @@ public class FrmInserir extends javax.swing.JFrame {
         String data = formato.format(jdcData.getDate());
         gas.setData(data);
         gas.setArea(jcbArea.getSelectedItem().toString());
-        ct.updateCtrl(gas);
+
         if (ct.updateCtrl(gas) == true) {
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
-            ft.preencher(ct.getAll());
 
         } else {
             JOptionPane.showMessageDialog(null, "Erro");
 
         }
+        ft.preencher(ct.getAll());
+        dispose();
+
 
     }//GEN-LAST:event_jbAlterarActionPerformed
-
-    private void jtfValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfValorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfValorActionPerformed
-
-    private void jtfTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfTipoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfTipoActionPerformed
 
     private void jtfTipoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTipoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -334,10 +336,19 @@ public class FrmInserir extends javax.swing.JFrame {
         int x = JOptionPane.showOptionDialog(null, "Deseja remover o Código " + jtfCodigo.getText(),
                 "Você tem certeza disso?", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opc, opc[0]);
         if (x == 0) {
-            ct.excluirCtrl(Integer.parseInt(jtfCodigo.getText()));
-            JOptionPane.showMessageDialog(null, "Removido com sucesso");
+            if (ct.excluirCtrl(Integer.parseInt(jtfCodigo.getText())) == true) {
+                JOptionPane.showMessageDialog(null, "Removido com sucesso");
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error", "Erro", JOptionPane.ERROR_MESSAGE);
+
+            }
         }
     }//GEN-LAST:event_jbRemoverActionPerformed
+
+    private void jbNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNextActionPerformed
+       
+    }//GEN-LAST:event_jbNextActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -350,6 +361,7 @@ public class FrmInserir extends javax.swing.JFrame {
     private javax.swing.JButton jbAlterar;
     private javax.swing.JButton jbFechar;
     private javax.swing.JButton jbIncluir;
+    private javax.swing.JButton jbNext;
     private javax.swing.JButton jbRemover;
     private javax.swing.JComboBox<String> jcbArea;
     private com.toedter.calendar.JDateChooser jdcData;

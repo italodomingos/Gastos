@@ -6,9 +6,7 @@ import control.Ferramentas;
 import control.Helper;
 import control.Verificacao;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import static java.lang.Thread.sleep;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -16,7 +14,6 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -34,38 +31,54 @@ import org.jfree.data.general.DefaultPieDataset;
 public class FrmTabela extends javax.swing.JFrame {
 
     Helper help = new Helper();
-    int cont = 0;
 
     public FrmTabela() {
 
         initComponents();
-        new Thread() {
-            public void run() {
-                int x = 400;
-                int y = jlWelcome.getLocation().y;
-
-                while (true) {
-                    x--;
-                    if (x < -100) {
-                        x = 400;
-                    }
-                    jlWelcome.setLocation(x, y);
-                    try {
-                        sleep(10);
-                    } catch (Exception e) {
-
-                    }
-
-                }
-
-            }
-
-        }.start();
+        
+        //new Thread(chamar).start();
+        
         setExtendedState(MAXIMIZED_BOTH);
         jtpGeral.setEnabledAt(1, false);
         jtpGeral.setEnabledAt(2, false);
+        
+        new Thread(movLabel).start();
 
     }
+    
+    private Runnable movLabel = new Runnable() {
+
+        public void run() {
+            int x = 500;
+            int y = jlTeste.getLocation().y;
+            while (true) {
+                x--;
+                if (x < -100) {
+                    x = 400;
+                }
+                jlTeste.setLocation(x, y);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    };
+    private Runnable chamar = new Runnable() {
+        private CtrlGastos ct = new CtrlGastos();
+
+        public void run() {
+            while (true) {
+                preencher(ct.getAll());
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    };
 
     public void preencherGrafico(Gastos[] g) {
         jtpGeral.setEnabledAt(2, true);
@@ -140,7 +153,7 @@ public class FrmTabela extends javax.swing.JFrame {
         jlIcone = new javax.swing.JLabel();
         jtpGeral = new javax.swing.JTabbedPane();
         jpInicio = new javax.swing.JPanel();
-        jlWelcome = new javax.swing.JLabel();
+        jlTeste = new javax.swing.JLabel();
         jpTabela = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtTabela = new javax.swing.JTable();
@@ -193,25 +206,23 @@ public class FrmTabela extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jlWelcome.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jlWelcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlWelcome.setText("Welcome");
+        jlTeste.setText("Teste");
 
         javax.swing.GroupLayout jpInicioLayout = new javax.swing.GroupLayout(jpInicio);
         jpInicio.setLayout(jpInicioLayout);
         jpInicioLayout.setHorizontalGroup(
             jpInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpInicioLayout.createSequentialGroup()
-                .addGap(273, 273, 273)
-                .addComponent(jlWelcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(297, 297, 297))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpInicioLayout.createSequentialGroup()
+                .addContainerGap(506, Short.MAX_VALUE)
+                .addComponent(jlTeste)
+                .addGap(119, 119, 119))
         );
         jpInicioLayout.setVerticalGroup(
             jpInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpInicioLayout.createSequentialGroup()
-                .addGap(196, 196, 196)
-                .addComponent(jlWelcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(213, 213, 213))
+                .addGap(146, 146, 146)
+                .addComponent(jlTeste, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(189, Short.MAX_VALUE))
         );
 
         jtpGeral.addTab("Início", jpInicio);
@@ -423,7 +434,7 @@ public class FrmTabela extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jtpGeral)
-                .addGap(0, 0, 0))
+                .addContainerGap())
         );
 
         pack();
@@ -533,7 +544,7 @@ public class FrmTabela extends javax.swing.JFrame {
                     try {
                         fi.preencherAlterar((int) jtTabela.getValueAt(jtTabela.getSelectedRow(), 0));
                         fi.setVisible(true);
-                        //jtTabela.getSelectionModel().removeListSelectionListener(this);
+                        jtTabela.getSelectionModel().removeListSelectionListener(this);
                     } catch (ParseException ex) {
                         Logger.getLogger(FrmTabela.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -734,7 +745,7 @@ public class FrmTabela extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel jlIcone;
-    private javax.swing.JLabel jlWelcome;
+    private javax.swing.JLabel jlTeste;
     private javax.swing.JMenu jmFerramentas;
     private javax.swing.JMenu jmFiltrar;
     private javax.swing.JMenu jmMes;

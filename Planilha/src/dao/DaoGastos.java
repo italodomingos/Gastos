@@ -15,9 +15,10 @@ public class DaoGastos {
 
             conexao.conectar();
 
-            String sql = "INSERT INTO tabela (calendario,valor,tipo) VALUES ('" + gas.getData()
+            String sql = "INSERT INTO tabela (calendario,valor,tipo,areaTipo) VALUES ('" + gas.getData()
                     + "','" + gas.getValor()
                     + "','" + gas.getTipo()
+                    + "','" + gas.getArea()
                     + "');";
 
             return conexao.insertSQL(sql);
@@ -103,6 +104,7 @@ public class DaoGastos {
                 String datas = formato.format(data);
 
                 gas[i].setData(datas);
+                gas[i].setArea(conexao.getResultSet().getString("areaTipo"));
                 gas[i].setTipo(conexao.getResultSet().getString("tipo"));
                 gas[i].setValor(conexao.getResultSet().getFloat("valor"));
 
@@ -145,6 +147,7 @@ public class DaoGastos {
                 String datas = formato.format(data);
 
                 gas[i].setData(datas);
+                gas[i].setArea(conexao.getResultSet().getString("areaTipo"));
                 gas[i].setTipo(conexao.getResultSet().getString("tipo"));
                 gas[i].setValor(conexao.getResultSet().getFloat("valor"));
 
@@ -179,6 +182,7 @@ public class DaoGastos {
                 String datas = formato.format(data);
 
                 gas.setData(datas);
+                gas.setArea(conexao.getResultSet().getString("areaTipo"));
                 gas.setTipo(conexao.getResultSet().getString("tipo"));
                 gas.setValor(conexao.getResultSet().getFloat("valor"));
             }
@@ -222,6 +226,7 @@ public class DaoGastos {
 
                 gas[i].setData(datas);
 
+                gas[i].setArea(conexao.getResultSet().getString("areaTipo"));
                 gas[i].setTipo(conexao.getResultSet().getString("tipo"));
                 gas[i].setValor(conexao.getResultSet().getFloat("valor"));
 
@@ -263,6 +268,7 @@ public class DaoGastos {
                 String datas = formato.format(data);
                 gas[i].setData(datas);
 
+                gas[i].setArea(conexao.getResultSet().getString("areaTipo"));
                 gas[i].setTipo(conexao.getResultSet().getString("tipo"));
                 gas[i].setValor(conexao.getResultSet().getFloat("valor"));
 
