@@ -328,20 +328,20 @@ public class DaoGastos {
 
         try {
             conexao.conectar();
-            String sql = "SELECT ROUND(SUM(valor),2),tipo FROM tabela group by tipo";
+            String sql = "SELECT ROUND(SUM(valor),2) AS soma,areaTipo FROM tabela group by areaTipo";
             conexao.executarSQL(sql);
             while (conexao.getResultSet().next()) {
                 gas = new Gastos[x];
                 x++;
             }
-            sql = "SELECT ROUND(SUM(valor),2) AS soma,tipo FROM tabela group by tipo";
+            sql = "SELECT ROUND(SUM(valor),2) AS soma,areaTipo FROM tabela group by areaTipo";
             conexao.executarSQL(sql);
 
             for (int i = 0; conexao.getResultSet().next() == true; i++) {
 
                 gas[i] = new Gastos();
 
-                gas[i].setTipo(conexao.getResultSet().getString("tipo"));
+                gas[i].setArea(conexao.getResultSet().getString("areaTipo"));
                 gas[i].setValor(conexao.getResultSet().getFloat("soma"));
 
             }
@@ -356,6 +356,32 @@ public class DaoGastos {
 
         return gas;
 
+    }
+    public int getLastId() {
+
+        int aux=0;
+
+        ConexaoMySql conexao = new ConexaoMySql();
+
+        try {
+            conexao.conectar();
+            String sql = "SELECT MAX(codigo) as ultimo FROM tabela;";
+            conexao.executarSQL(sql);
+            while (conexao.getResultSet().next()) {
+                aux = Integer.parseInt(conexao.getResultSet().getString("ultimo"));
+            }
+
+            conexao.executarSQL(sql);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+            conexao.fecharConexao();
+
+        }
+
+        return aux;
     }
 
 }

@@ -46,5 +46,8 @@ public class CtrlGastos {
     public Gastos[] getCtrlSomaTipos() {
         return new DaoGastos().getSomaTipos();
     }
+    public int getLastId() {
+        return new DaoGastos().getLastId();
+    }
 
 }

@@ -35,17 +35,16 @@ public class FrmTabela extends javax.swing.JFrame {
     public FrmTabela() {
 
         initComponents();
-        
+
         //new Thread(chamar).start();
-        
         setExtendedState(MAXIMIZED_BOTH);
         jtpGeral.setEnabledAt(1, false);
         jtpGeral.setEnabledAt(2, false);
-        
+
         new Thread(movLabel).start();
 
     }
-    
+
     private Runnable movLabel = new Runnable() {
 
         public void run() {
@@ -85,7 +84,7 @@ public class FrmTabela extends javax.swing.JFrame {
         DefaultPieDataset dpd = new DefaultPieDataset();
 
         for (int i = 0; i < g.length; i++) {
-            dpd.setValue(g[i].getTipo(), g[i].getValor());
+            dpd.setValue(g[i].getArea(), g[i].getValor());
         }
 
         JFreeChart jfc = ChartFactory.createPieChart("Gastos", dpd, true, true, false);
@@ -441,27 +440,30 @@ public class FrmTabela extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRemoverActionPerformed
-        CtrlGastos ct = new CtrlGastos();
-        preencher(ct.getAll());
-        JOptionPane.showMessageDialog(null, "Pressione um registro para remové-lo");
-        jtTabela.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent event) {
-                if (jtTabela.getSelectedRow() > -1) {
+        jtTabela.clearSelection();
+        if (jtTabela.getValueAt(1, 1) != null) {
+            JOptionPane.showMessageDialog(null, "Pressione um registro para remové-lo");
+            jtTabela.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent event) {
+                    if (jtTabela.getSelectedRow() > -1) {
 
-                    try {
-                        FrmInserir fi = new FrmInserir();
-                        fi.preencherRemover((int) jtTabela.getValueAt(jtTabela.getSelectedRow(), 0));
-                        fi.setVisible(true);
-                        jtTabela.getSelectionModel().removeListSelectionListener(this);
-                    } catch (ParseException ex) {
-                        Logger.getLogger(FrmTabela.class.getName()).log(Level.SEVERE, null, ex);
+                        try {
+                            FrmInserir fi = new FrmInserir();
+                            fi.preencherRemover((int) jtTabela.getValueAt(jtTabela.getSelectedRow(), 0));
+                            fi.setVisible(true);
+                            jtTabela.getSelectionModel().removeListSelectionListener(this);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(FrmTabela.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
                     }
 
                 }
-
-            }
-        });
+            });
+        } else {
+            JOptionPane.showMessageDialog(null, "Informe uma tabela", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_jmiRemoverActionPerformed
 
@@ -529,31 +531,31 @@ public class FrmTabela extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiPTodosActionPerformed
 
     private void jmiEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditarActionPerformed
-        CtrlGastos ct = new CtrlGastos();
-        preencher(ct.getAll());
-        JOptionPane.showMessageDialog(null, "Pressione um registro para alterá-lo");
-        jtTabela.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent event) {
-                if (jtTabela.getSelectedRow() > -1) {
-                    /* String opc[] = {"Sim", "Não"};
-                    int x = JOptionPane.showOptionDialog(null, "Deseja editar o Código " + jtTabela.getValueAt(jtTabela.getSelectedRow(), 0),
-                            "Você tem certeza disso?", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opc, opc[0]);
-                    if (x == 0) {*/
-                    FrmInserir fi = new FrmInserir();
-                    try {
-                        fi.preencherAlterar((int) jtTabela.getValueAt(jtTabela.getSelectedRow(), 0));
-                        fi.setVisible(true);
-                        jtTabela.getSelectionModel().removeListSelectionListener(this);
-                    } catch (ParseException ex) {
-                        Logger.getLogger(FrmTabela.class.getName()).log(Level.SEVERE, null, ex);
+        jtTabela.clearSelection();
+        if (jtTabela.getValueAt(1, 1) != null) {
+            JOptionPane.showMessageDialog(null, "Pressione um registro para alterá-lo");
+            jtTabela.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent event) {
+                    if (jtTabela.getSelectedRow() > -1) {
+
+                        FrmInserir fi = new FrmInserir();
+                        try {
+                            fi.preencherAlterar((int) jtTabela.getValueAt(jtTabela.getSelectedRow(), 0));
+                            fi.setVisible(true);
+                            jtTabela.getSelectionModel().removeListSelectionListener(this);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(FrmTabela.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
                     }
 
-                    // }
                 }
+            });
+        } else {
+            JOptionPane.showMessageDialog(null, "Informe uma tabela", "Error", JOptionPane.ERROR_MESSAGE);
 
-            }
-        });
+        }
 
     }//GEN-LAST:event_jmiEditarActionPerformed
 
@@ -645,7 +647,6 @@ public class FrmTabela extends javax.swing.JFrame {
         Ferramentas f = new Ferramentas();
         Gastos[] gas = ct.getFiltros();
         float soma = 0;
-        int cont = 0;
         DefaultTableModel modelo = (DefaultTableModel) jtTabela.getModel();
 
         jc.addItem(null);
@@ -656,34 +657,37 @@ public class FrmTabela extends javax.swing.JFrame {
         Object[] parametros = {"Selecione um filtro", jc};
         String opc[] = {"Filtrar", "Add Filtro", "Remover Filtro"};
         int x = JOptionPane.showOptionDialog(null, parametros, "Filtros", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opc, opc[0]);
-        Gastos[] g = ct.getCtrlNome(jc.getSelectedItem().toString());
-        if (x == 0) {
-            preencher(ct.getCtrlNome(jc.getSelectedItem().toString()));
+        try {
+            Gastos[] g = ct.getCtrlNome(jc.getSelectedItem().toString());
 
-        } else if (f.percorrerTabela(modelo, jc.getSelectedItem().toString()) == true) {
-            soma = Float.parseFloat(modelo.getValueAt(modelo.getRowCount() - 1, 2).toString().replace("R$", ""));
+            if (x == 0) {
+                preencher(ct.getCtrlNome(jc.getSelectedItem().toString()));
 
-            modelo.removeRow(modelo.getRowCount() - 1);
+            } else if (f.percorrerTabela(modelo, jc.getSelectedItem().toString()) == true) {
+                soma = Float.parseFloat(modelo.getValueAt(modelo.getRowCount() - 1, 2).toString().replace("R$", ""));
 
-            for (int i = 0; i < g.length; i++) {
-                modelo.addRow(new Object[]{g[i].getCodigo(), g[i].getTipo(), "R$ " + g[i].getValor(), g[i].getData().replace('-', '/')});
-                soma = soma + g[i].getValor();
+                modelo.removeRow(modelo.getRowCount() - 1);
+
+                for (int i = 0; i < g.length; i++) {
+                    modelo.addRow(new Object[]{g[i].getCodigo(), g[i].getTipo(), "R$ " + g[i].getValor(), g[i].getData().replace('-', '/')});
+                    soma = soma + g[i].getValor();
+                }
+                help.setSoma(soma);
+                modelo.addRow(new Object[]{"Total", "", "R$ " + help.getSoma()});
+
+            } else if (x == 2) {
+
+                help.setSoma(help.getSoma() - f.removerRegistrosTabela(modelo, jc.getSelectedItem().toString()));
+
+                modelo.addRow(new Object[]{"Total", "", "R$ " + help.getSoma()});
+
+            } else if (jc.getSelectedItem().equals(null)) {
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Filtro já utilizado", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            help.setSoma(soma);
-            modelo.addRow(new Object[]{"Total", "", "R$ " + help.getSoma()});
-
-        } else if (x == 2) {
-
-            help.setSoma(help.getSoma() - f.removerRegistrosTabela(modelo, jc.getSelectedItem().toString()));
-
-            modelo.addRow(new Object[]{"Total", "", "R$ " + help.getSoma()});
-
-        } else if (jc.getSelectedItem().equals(null)) {
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Filtro já utilizado", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NullPointerException ne) {
         }
-
 
     }//GEN-LAST:event_jmFiltrarMousePressed
 

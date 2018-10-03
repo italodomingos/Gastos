@@ -4,6 +4,8 @@ import control.CtrlGastos;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Gastos;
 
@@ -80,6 +82,7 @@ public class FrmInserir extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jcbArea = new javax.swing.JComboBox<>();
         jbNext = new javax.swing.JButton();
+        jbBack = new javax.swing.JButton();
 
         jLabel4.setText("jLabel4");
 
@@ -95,6 +98,7 @@ public class FrmInserir extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jlMes.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jlMes.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jlMes.setText("Cadastro");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -102,16 +106,16 @@ public class FrmInserir extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(152, 152, 152)
-                .addComponent(jlMes)
-                .addGap(151, 151, 151))
+                .addGap(180, 180, 180)
+                .addComponent(jlMes, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                .addGap(180, 180, 180))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jlMes)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jlMes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(30, 30, 30))
         );
 
         jLabel1.setText("Tipo:");
@@ -163,12 +167,19 @@ public class FrmInserir extends javax.swing.JFrame {
 
         jLabel5.setText("Área:");
 
-        jcbArea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolha uma área", "Refeição", "Combustivel", "Supermercado", "Transporte", "Ecommerce", "Lazer", "IOF", "Juros", "Hinode" }));
+        jcbArea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolha uma área", "Refeição", "Combustivel", "Supermercado", "Transporte", "Ecommerce", "Lazer", "IOF", "Juros", "Hinode", "Carro" }));
 
         jbNext.setText(">");
         jbNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbNextActionPerformed(evt);
+            }
+        });
+
+        jbBack.setText("<");
+        jbBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBackActionPerformed(evt);
             }
         });
 
@@ -187,28 +198,26 @@ public class FrmInserir extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jbFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
+                .addComponent(jbBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jlCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jlCodigo, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jcbArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jtfValor, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(127, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jdcData, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbNext))))
+                        .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcbArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfValor, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jdcData, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbNext))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,7 +237,8 @@ public class FrmInserir extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(jdcData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbNext))
+                    .addComponent(jbNext)
+                    .addComponent(jbBack))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -347,8 +357,69 @@ public class FrmInserir extends javax.swing.JFrame {
     }//GEN-LAST:event_jbRemoverActionPerformed
 
     private void jbNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNextActionPerformed
-       
+
+        CtrlGastos ct = new CtrlGastos();
+        int aux = ct.getLastId();
+        int codigoNovo = Integer.parseInt(jtfCodigo.getText()) + 1;
+        if (aux >= codigoNovo) {
+            Gastos g = ct.getPorCod(codigoNovo);
+
+            jtfTipo.setText(g.getTipo());
+            try {
+                jdcData.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(g.getData()));
+
+                jtfValor.setText(String.valueOf(g.getValor()));
+                jtfCodigo.setText(String.valueOf(g.getCodigo()));
+                jcbArea.setSelectedItem(g.getArea());
+            } catch (ParseException ex) {
+                Logger.getLogger(FrmInserir.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException en) {
+                jtfTipo.setText(null);
+
+                jdcData.setDate(null);
+
+                jtfValor.setText(null);
+                jtfCodigo.setText(String.valueOf(Integer.parseInt(jtfCodigo.getText()) + 1));
+                jcbArea.setSelectedItem(null);
+
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Acabou os registros");
+        }
     }//GEN-LAST:event_jbNextActionPerformed
+
+    private void jbBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBackActionPerformed
+        CtrlGastos ct = new CtrlGastos();
+
+        int codigoNovo = Integer.parseInt(jtfCodigo.getText()) - 1;
+        if (codigoNovo > 0) {
+            Gastos g = ct.getPorCod(codigoNovo);
+
+            jtfTipo.setText(g.getTipo());
+            try {
+                jdcData.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(g.getData()));
+
+                jtfValor.setText(String.valueOf(g.getValor()));
+                jtfCodigo.setText(String.valueOf(g.getCodigo()));
+                jcbArea.setSelectedItem(g.getArea());
+            } catch (ParseException ex) {
+                Logger.getLogger(FrmInserir.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException en) {
+                jtfTipo.setText(null);
+
+                jdcData.setDate(null);
+
+                jtfValor.setText(null);
+                jtfCodigo.setText(String.valueOf(Integer.parseInt(jtfCodigo.getText()) - 1));
+                jcbArea.setSelectedItem(null);
+
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Acabou os registros");
+        }
+    }//GEN-LAST:event_jbBackActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -359,6 +430,7 @@ public class FrmInserir extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbAlterar;
+    private javax.swing.JButton jbBack;
     private javax.swing.JButton jbFechar;
     private javax.swing.JButton jbIncluir;
     private javax.swing.JButton jbNext;
