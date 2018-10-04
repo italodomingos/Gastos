@@ -37,9 +37,16 @@ public class FrmInserir extends javax.swing.JFrame {
         jbIncluir.setVisible(false);
         jbAlterar.setVisible(true);
         jbRemover.setVisible(false);
+        if (g.getCodigo() == ct.getFirstId()) {
+            jbBack.setVisible(false);
+        }
+        if (g.getCodigo() == ct.getLastId()) {
+            jbNext.setVisible(false);
+        }
     }
 
     public void preencherRemover(int cod) throws ParseException {
+        
         CtrlGastos ct = new CtrlGastos();
         Gastos g = ct.getPorCod(cod);
         jtfTipo.setText(g.getTipo());
@@ -274,13 +281,10 @@ public class FrmInserir extends javax.swing.JFrame {
 
                 SimpleDateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
                 String data = formato.format(jdcData.getDate());
-
                 gas.setData(data);
                 gas.setTipo(jtfTipo.getText());
-
                 gas.setValor(Float.parseFloat(jtfValor.getText().replace(',', '.')));
                 gas.setArea(jcbArea.getSelectedItem().toString());
-
                 ct.salvarCtrl(gas);
                 jdcData.setDate(null);
                 jtfTipo.setText(null);
@@ -357,27 +361,26 @@ public class FrmInserir extends javax.swing.JFrame {
     }//GEN-LAST:event_jbRemoverActionPerformed
 
     private void jbNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNextActionPerformed
-
         CtrlGastos ct = new CtrlGastos();
         int aux = ct.getLastId();
         int codigoNovo = Integer.parseInt(jtfCodigo.getText()) + 1;
-        if (aux >= codigoNovo) {
+
+        if (codigoNovo <= ct.getLastId()) {
+            jbBack.setVisible(true);
             Gastos g = ct.getPorCod(codigoNovo);
 
             jtfTipo.setText(g.getTipo());
             try {
                 jdcData.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(g.getData()));
-
                 jtfValor.setText(String.valueOf(g.getValor()));
                 jtfCodigo.setText(String.valueOf(g.getCodigo()));
                 jcbArea.setSelectedItem(g.getArea());
             } catch (ParseException ex) {
                 Logger.getLogger(FrmInserir.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NullPointerException en) {
+
                 jtfTipo.setText(null);
-
                 jdcData.setDate(null);
-
                 jtfValor.setText(null);
                 jtfCodigo.setText(String.valueOf(Integer.parseInt(jtfCodigo.getText()) + 1));
                 jcbArea.setSelectedItem(null);
@@ -385,7 +388,8 @@ public class FrmInserir extends javax.swing.JFrame {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Acabou os registros");
+            jbNext.setVisible(false);
+            JOptionPane.showMessageDialog(null, "Não existe mais registros", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jbNextActionPerformed
 
@@ -393,23 +397,25 @@ public class FrmInserir extends javax.swing.JFrame {
         CtrlGastos ct = new CtrlGastos();
 
         int codigoNovo = Integer.parseInt(jtfCodigo.getText()) - 1;
-        if (codigoNovo > 0) {
+        if (codigoNovo >= ct.getFirstId()) {
+
+            jbNext.setVisible(true);
             Gastos g = ct.getPorCod(codigoNovo);
-
             jtfTipo.setText(g.getTipo());
-            try {
-                jdcData.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(g.getData()));
 
+            try {
+
+                jdcData.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(g.getData()));
                 jtfValor.setText(String.valueOf(g.getValor()));
                 jtfCodigo.setText(String.valueOf(g.getCodigo()));
                 jcbArea.setSelectedItem(g.getArea());
+
             } catch (ParseException ex) {
                 Logger.getLogger(FrmInserir.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NullPointerException en) {
+
                 jtfTipo.setText(null);
-
                 jdcData.setDate(null);
-
                 jtfValor.setText(null);
                 jtfCodigo.setText(String.valueOf(Integer.parseInt(jtfCodigo.getText()) - 1));
                 jcbArea.setSelectedItem(null);
@@ -417,7 +423,8 @@ public class FrmInserir extends javax.swing.JFrame {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Acabou os registros");
+            jbBack.setVisible(false);
+            JOptionPane.showMessageDialog(null, "Não existe mais registros", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jbBackActionPerformed
 

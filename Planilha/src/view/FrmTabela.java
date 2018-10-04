@@ -31,6 +31,8 @@ import org.jfree.data.general.DefaultPieDataset;
 public class FrmTabela extends javax.swing.JFrame {
 
     Helper help = new Helper();
+    boolean ver = true;
+    ListSelectionListener[] listener;
 
     public FrmTabela() {
 
@@ -204,6 +206,7 @@ public class FrmTabela extends javax.swing.JFrame {
         jlIcone.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Controle de Gastos");
 
         jlTeste.setText("Teste");
 
@@ -442,7 +445,10 @@ public class FrmTabela extends javax.swing.JFrame {
     private void jmiRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRemoverActionPerformed
         jtTabela.clearSelection();
         if (jtTabela.getValueAt(1, 1) != null) {
+
             JOptionPane.showMessageDialog(null, "Pressione um registro para remové-lo");
+            listener = getListeners(ListSelectionListener.class);
+            System.out.println(listener.length);
             jtTabela.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
                 @Override
                 public void valueChanged(ListSelectionEvent event) {
@@ -453,6 +459,7 @@ public class FrmTabela extends javax.swing.JFrame {
                             fi.preencherRemover((int) jtTabela.getValueAt(jtTabela.getSelectedRow(), 0));
                             fi.setVisible(true);
                             jtTabela.getSelectionModel().removeListSelectionListener(this);
+
                         } catch (ParseException ex) {
                             Logger.getLogger(FrmTabela.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -461,6 +468,7 @@ public class FrmTabela extends javax.swing.JFrame {
 
                 }
             });
+
         } else {
             JOptionPane.showMessageDialog(null, "Informe uma tabela", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -532,26 +540,38 @@ public class FrmTabela extends javax.swing.JFrame {
 
     private void jmiEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditarActionPerformed
         jtTabela.clearSelection();
-        if (jtTabela.getValueAt(1, 1) != null) {
-            JOptionPane.showMessageDialog(null, "Pressione um registro para alterá-lo");
-            jtTabela.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent event) {
-                    if (jtTabela.getSelectedRow() > -1) {
 
-                        FrmInserir fi = new FrmInserir();
-                        try {
-                            fi.preencherAlterar((int) jtTabela.getValueAt(jtTabela.getSelectedRow(), 0));
-                            fi.setVisible(true);
-                            jtTabela.getSelectionModel().removeListSelectionListener(this);
-                        } catch (ParseException ex) {
-                            Logger.getLogger(FrmTabela.class.getName()).log(Level.SEVERE, null, ex);
+        if (jtTabela.getValueAt(1, 1) != null) {
+            if (ver == true) {
+                JOptionPane.showMessageDialog(null, "Pressione um registro para alterá-lo");
+                ver = false;
+                jtTabela.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+                    @Override
+                    public void valueChanged(ListSelectionEvent event) {
+
+                        if (jtTabela.getSelectedRow() > -1) {
+
+                            FrmInserir fi = new FrmInserir();
+                            try {
+                                fi.preencherAlterar((int) jtTabela.getValueAt(jtTabela.getSelectedRow(), 0));
+                                fi.setVisible(true);
+                                jtTabela.getSelectionModel().removeListSelectionListener(this);
+                                ver = true;
+
+                            } catch (ParseException ex) {
+                                Logger.getLogger(FrmTabela.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
                         }
 
                     }
 
-                }
-            });
+                });
+            } else {
+                JOptionPane.showMessageDialog(null, "Já existe uma requisição", "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Informe uma tabela", "Error", JOptionPane.ERROR_MESSAGE);
 

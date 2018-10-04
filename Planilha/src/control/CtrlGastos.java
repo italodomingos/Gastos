@@ -49,5 +49,8 @@ public class CtrlGastos {
     public int getLastId() {
         return new DaoGastos().getLastId();
     }
+    public int getFirstId() {
+        return new DaoGastos().getFirstId();
+    }
 
 }

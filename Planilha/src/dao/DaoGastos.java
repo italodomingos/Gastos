@@ -383,5 +383,31 @@ public class DaoGastos {
 
         return aux;
     }
+    public int getFirstId() {
+
+        int aux=0;
+
+        ConexaoMySql conexao = new ConexaoMySql();
+
+        try {
+            conexao.conectar();
+            String sql = "SELECT MIN(codigo) AS Primeiro FROM tabela;";
+            conexao.executarSQL(sql);
+            while (conexao.getResultSet().next()) {
+                aux = Integer.parseInt(conexao.getResultSet().getString("Primeiro"));
+            }
+
+            conexao.executarSQL(sql);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+            conexao.fecharConexao();
+
+        }
+
+        return aux;
+    }
 
 }
