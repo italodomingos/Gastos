@@ -5,12 +5,14 @@ import control.CtrlGastos;
 import control.Ferramentas;
 import control.Helper;
 import control.Verificacao;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -38,12 +40,15 @@ public class FrmTabela extends javax.swing.JFrame {
 
         initComponents();
 
-        //new Thread(chamar).start();
+        Ferramentas f = new Ferramentas();
+        ImageIcon imageIcon = new ImageIcon(System.getProperty("user.dir").replace('\\', '/') + "/src/icon/icone.jpg");
+        jlWelcome.setIcon(f.setImageSize(imageIcon, jlWelcome.getWidth(), jlWelcome.getHeight()));
+
         setExtendedState(MAXIMIZED_BOTH);
         jtpGeral.setEnabledAt(1, false);
         jtpGeral.setEnabledAt(2, false);
 
-        new Thread(movLabel).start();
+        //new Thread(movLabel).start();
 
     }
 
@@ -51,29 +56,15 @@ public class FrmTabela extends javax.swing.JFrame {
 
         public void run() {
             int x = 500;
-            int y = jlTeste.getLocation().y;
+            int y = jlWelcome.getLocation().y;
             while (true) {
                 x--;
                 if (x < -100) {
                     x = 400;
                 }
-                jlTeste.setLocation(x, y);
+                jlWelcome.setLocation(x, y);
                 try {
                     Thread.sleep(10);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
-    };
-    private Runnable chamar = new Runnable() {
-        private CtrlGastos ct = new CtrlGastos();
-
-        public void run() {
-            while (true) {
-                preencher(ct.getAll());
-                try {
-                    Thread.sleep(5000);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -154,7 +145,7 @@ public class FrmTabela extends javax.swing.JFrame {
         jlIcone = new javax.swing.JLabel();
         jtpGeral = new javax.swing.JTabbedPane();
         jpInicio = new javax.swing.JPanel();
-        jlTeste = new javax.swing.JLabel();
+        jlWelcome = new javax.swing.JLabel();
         jpTabela = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtTabela = new javax.swing.JTable();
@@ -208,23 +199,18 @@ public class FrmTabela extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Controle de Gastos");
 
-        jlTeste.setText("Teste");
+        jlWelcome.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlWelcome.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jpInicioLayout = new javax.swing.GroupLayout(jpInicio);
         jpInicio.setLayout(jpInicioLayout);
         jpInicioLayout.setHorizontalGroup(
             jpInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpInicioLayout.createSequentialGroup()
-                .addContainerGap(506, Short.MAX_VALUE)
-                .addComponent(jlTeste)
-                .addGap(119, 119, 119))
+            .addComponent(jlWelcome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE)
         );
         jpInicioLayout.setVerticalGroup(
             jpInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpInicioLayout.createSequentialGroup()
-                .addGap(146, 146, 146)
-                .addComponent(jlTeste, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(189, Short.MAX_VALUE))
+            .addComponent(jlWelcome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
         );
 
         jtpGeral.addTab("Início", jpInicio);
@@ -246,11 +232,11 @@ public class FrmTabela extends javax.swing.JFrame {
         jpTabela.setLayout(jpTabelaLayout);
         jpTabelaLayout.setHorizontalGroup(
             jpTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE)
         );
         jpTabelaLayout.setVerticalGroup(
             jpTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
         );
 
         jtpGeral.addTab("Tabela", jpTabela);
@@ -259,11 +245,11 @@ public class FrmTabela extends javax.swing.JFrame {
         jpGraficos.setLayout(jpGraficosLayout);
         jpGraficosLayout.setHorizontalGroup(
             jpGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 652, Short.MAX_VALUE)
+            .addGap(0, 864, Short.MAX_VALUE)
         );
         jpGraficosLayout.setVerticalGroup(
             jpGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 434, Short.MAX_VALUE)
+            .addGap(0, 389, Short.MAX_VALUE)
         );
 
         jtpGeral.addTab("Gráficos", jpGraficos);
@@ -434,9 +420,7 @@ public class FrmTabela extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jtpGeral)
-                .addContainerGap())
+            .addComponent(jtpGeral, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -769,7 +753,7 @@ public class FrmTabela extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel jlIcone;
-    private javax.swing.JLabel jlTeste;
+    private javax.swing.JLabel jlWelcome;
     private javax.swing.JMenu jmFerramentas;
     private javax.swing.JMenu jmFiltrar;
     private javax.swing.JMenu jmMes;

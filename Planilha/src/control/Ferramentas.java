@@ -1,8 +1,10 @@
 package control;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -82,6 +84,13 @@ public class Ferramentas {
             e.printStackTrace();
 
         }
+    }
+    public ImageIcon setImageSize(ImageIcon imageIcon, int width, int heigt) {
+
+        Image image = imageIcon.getImage();
+        Image newimg = image.getScaledInstance(width, heigt, java.awt.Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(newimg);
+        return imageIcon;
     }
 
 }

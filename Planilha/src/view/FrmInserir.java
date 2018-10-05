@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import model.Gastos;
 
 public class FrmInserir extends javax.swing.JFrame {
@@ -46,7 +47,7 @@ public class FrmInserir extends javax.swing.JFrame {
     }
 
     public void preencherRemover(int cod) throws ParseException {
-        
+
         CtrlGastos ct = new CtrlGastos();
         Gastos g = ct.getPorCod(cod);
         jtfTipo.setText(g.getTipo());
@@ -71,7 +72,6 @@ public class FrmInserir extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel4 = new javax.swing.JLabel();
         jbFechar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jlMes = new javax.swing.JLabel();
@@ -90,8 +90,7 @@ public class FrmInserir extends javax.swing.JFrame {
         jcbArea = new javax.swing.JComboBox<>();
         jbNext = new javax.swing.JButton();
         jbBack = new javax.swing.JButton();
-
-        jLabel4.setText("jLabel4");
+        jbNote = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -190,6 +189,13 @@ public class FrmInserir extends javax.swing.JFrame {
             }
         });
 
+        jbNote.setText("Anotação");
+        jbNote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNoteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -220,7 +226,10 @@ public class FrmInserir extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jcbArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jtfValor, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jtfValor, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbNote))
                     .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jdcData, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -249,8 +258,9 @@ public class FrmInserir extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jtfValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                    .addComponent(jtfValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbNote))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbIncluir)
                     .addComponent(jbFechar)
@@ -428,12 +438,21 @@ public class FrmInserir extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jbBackActionPerformed
 
+    private void jbNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNoteActionPerformed
+        
+        JTextArea jta = new JTextArea();
+        Object obj = jta;
+        
+        String opc[] = {"Adicionar Anotação"};
+        JOptionPane.showOptionDialog(null, obj, "Anotações", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opc,opc[0]);
+
+    }//GEN-LAST:event_jbNoteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbAlterar;
@@ -441,6 +460,7 @@ public class FrmInserir extends javax.swing.JFrame {
     private javax.swing.JButton jbFechar;
     private javax.swing.JButton jbIncluir;
     private javax.swing.JButton jbNext;
+    private javax.swing.JButton jbNote;
     private javax.swing.JButton jbRemover;
     private javax.swing.JComboBox<String> jcbArea;
     private com.toedter.calendar.JDateChooser jdcData;
