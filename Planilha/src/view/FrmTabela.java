@@ -4,18 +4,22 @@ import com.toedter.calendar.JDateChooser;
 import control.CtrlGastos;
 import control.Ferramentas;
 import control.Helper;
-import control.Verificacao;
-import java.awt.Image;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -49,7 +53,6 @@ public class FrmTabela extends javax.swing.JFrame {
         jtpGeral.setEnabledAt(2, false);
 
         //new Thread(movLabel).start();
-
     }
 
     private Runnable movLabel = new Runnable() {
@@ -429,30 +432,32 @@ public class FrmTabela extends javax.swing.JFrame {
     private void jmiRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRemoverActionPerformed
         jtTabela.clearSelection();
         if (jtTabela.getValueAt(1, 1) != null) {
+            if (ver == true) {
+                ver = false;
+                JOptionPane.showMessageDialog(null, "Pressione um registro para remové-lo");
+                jtTabela.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent event) {
+                        if (jtTabela.getSelectedRow() > -1) {
 
-            JOptionPane.showMessageDialog(null, "Pressione um registro para remové-lo");
-            listener = getListeners(ListSelectionListener.class);
-            System.out.println(listener.length);
-            jtTabela.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent event) {
-                    if (jtTabela.getSelectedRow() > -1) {
+                            try {
+                                FrmInserir fi = new FrmInserir();
+                                fi.preencherRemover((int) jtTabela.getValueAt(jtTabela.getSelectedRow(), 0));
+                                fi.setVisible(true);
+                                jtTabela.getSelectionModel().removeListSelectionListener(this);
+                                ver = true;
 
-                        try {
-                            FrmInserir fi = new FrmInserir();
-                            fi.preencherRemover((int) jtTabela.getValueAt(jtTabela.getSelectedRow(), 0));
-                            fi.setVisible(true);
-                            jtTabela.getSelectionModel().removeListSelectionListener(this);
+                            } catch (ParseException ex) {
+                                Logger.getLogger(FrmTabela.class.getName()).log(Level.SEVERE, null, ex);
+                            }
 
-                        } catch (ParseException ex) {
-                            Logger.getLogger(FrmTabela.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
                     }
-
-                }
-            });
-
+                });
+            } else {
+                JOptionPane.showMessageDialog(null, "Já existe uma requisição", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Informe uma tabela", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -460,23 +465,22 @@ public class FrmTabela extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiRemoverActionPerformed
 
     private void jmiAgostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAgostoActionPerformed
+        Ferramentas f = new Ferramentas();
 
-        Verificacao v = new Verificacao();
-        String teste[] = v.verData("agosto");
+        String teste[] = f.verData("agosto");
 
         setarData(teste[0], teste[1]);
     }//GEN-LAST:event_jmiAgostoActionPerformed
 
     private void jmiDezembroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDezembroActionPerformed
-        Verificacao v = new Verificacao();
-        String d[] = v.verData("Dezembro");
+        Ferramentas f = new Ferramentas();
+        String d[] = f.verData("Dezembro");
         setarData(d[0], d[1]);
     }//GEN-LAST:event_jmiDezembroActionPerformed
 
     private void jmiJulhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiJulhoActionPerformed
-
-        Verificacao v = new Verificacao();
-        String d[] = v.verData("julho");
+        Ferramentas f = new Ferramentas();
+        String d[] = f.verData("julho");
         setarData(d[0], d[1]);
 
     }//GEN-LAST:event_jmiJulhoActionPerformed
@@ -490,27 +494,27 @@ public class FrmTabela extends javax.swing.JFrame {
     }//GEN-LAST:event_jmSairMousePressed
 
     private void jmiJunhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiJunhoActionPerformed
-        Verificacao v = new Verificacao();
-        String d[] = v.verData("junho");
+        Ferramentas f = new Ferramentas();
+        String d[] = f.verData("junho");
         setarData(d[0], d[1]);
 
     }//GEN-LAST:event_jmiJunhoActionPerformed
 
     private void jmiSetembroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSetembroActionPerformed
-        Verificacao v = new Verificacao();
-        String d[] = v.verData("setembro");
+        Ferramentas f = new Ferramentas();
+        String d[] = f.verData("setembro");
         setarData(d[0], d[1]);
     }//GEN-LAST:event_jmiSetembroActionPerformed
 
     private void jmiOutubroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiOutubroActionPerformed
-        Verificacao v = new Verificacao();
-        String d[] = v.verData("Outubro");
+        Ferramentas f = new Ferramentas();
+        String d[] = f.verData("Outubro");
         setarData(d[0], d[1]);
     }//GEN-LAST:event_jmiOutubroActionPerformed
 
     private void jmiNovembroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNovembroActionPerformed
-        Verificacao v = new Verificacao();
-        String d[] = v.verData("Novembro");
+        Ferramentas f = new Ferramentas();
+        String d[] = f.verData("Novembro");
         setarData(d[0], d[1]);
     }//GEN-LAST:event_jmiNovembroActionPerformed
 
@@ -646,39 +650,93 @@ public class FrmTabela extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiGastoActionPerformed
 
     private void jmFiltrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmFiltrarMousePressed
+
         CtrlGastos ct = new CtrlGastos();
         JComboBox jc = new JComboBox();
+        JDateChooser jdcI = new JDateChooser();
+        JDateChooser jdcF = new JDateChooser();
+        JLabel jl1 = new JLabel("Selecione um filtro:");
+        JLabel jl2 = new JLabel("\nInício:");
+        JLabel jl3 = new JLabel("\nFim");
+
+        jl2.setVisible(false);
+        jl3.setVisible(false);
+        jdcI.setVisible(false);
+        jdcF.setVisible(false);
+
+        JRadioButton jrb = new JRadioButton("Filtro por data");
         Ferramentas f = new Ferramentas();
         Gastos[] gas = ct.getFiltros();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         float soma = 0;
         DefaultTableModel modelo = (DefaultTableModel) jtTabela.getModel();
+        Gastos[] g = {};
+        Date date = new Date("01/01/01");
+        jdcI.setDate(date);
+        jdcF.setDate(date);
 
+        jrb.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent event) {
+                if (jrb.isSelected()) {
+                    jl2.setVisible(true);
+                    jl3.setVisible(true);
+                    jdcI.setVisible(true);
+                    jdcF.setVisible(true);
+                } else {
+                    jl2.setVisible(false);
+                    jl3.setVisible(false);
+                    jdcI.setVisible(false);
+                    jdcF.setVisible(false);
+
+                }
+
+            }
+
+        });
         jc.addItem(null);
         for (int i = 0; i < ct.getFiltros().length - 1; i++) {
             jc.addItem(gas[i].getTipo());
         }
 
-        Object[] parametros = {"Selecione um filtro", jc};
+        Object[] parametros = {jl1, jc, jrb, jl2, jdcI, jl3, jdcF};
+
         String opc[] = {"Filtrar", "Add Filtro", "Remover Filtro"};
         int x = JOptionPane.showOptionDialog(null, parametros, "Filtros", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opc, opc[0]);
+
         try {
-            Gastos[] g = ct.getCtrlNome(jc.getSelectedItem().toString());
-
             if (x == 0) {
-                preencher(ct.getCtrlNome(jc.getSelectedItem().toString()));
+                String aux = sdf.format(jdcI.getDate());
+                System.out.println(aux);
 
-            } else if (f.percorrerTabela(modelo, jc.getSelectedItem().toString()) == true) {
-                soma = Float.parseFloat(modelo.getValueAt(modelo.getRowCount() - 1, 2).toString().replace("R$", ""));
+                if (aux.equals("2001/01/01")) {
+                    g = ct.getCtrlNome(jc.getSelectedItem().toString());
+                    preencher(g);
+                } else if (jc.getSelectedItem().toString().equals("")) {
+                    String dataI = sdf.format((jdcI.getDate()));
+                    String dataF = sdf.format((jdcF.getDate()));
+                    g = ct.getCtrl(dataI, dataF);
+                    preencher(g);
 
-                modelo.removeRow(modelo.getRowCount() - 1);
+                } else if (!aux.equals("2001/01/01")) {
+                    String dataI = sdf.format((jdcI.getDate()));
+                    String dataF = sdf.format((jdcF.getDate()));
+                    g = ct.getCtrlDataNome(dataI, dataF, jc.getSelectedItem().toString());
+                    preencher(g);
 
-                for (int i = 0; i < g.length; i++) {
-                    modelo.addRow(new Object[]{g[i].getCodigo(), g[i].getTipo(), "R$ " + g[i].getValor(), g[i].getData().replace('-', '/')});
-                    soma = soma + g[i].getValor();
+                } else if (x == 1 && f.percorrerTabela(modelo, jc.getSelectedItem().toString()) == true) {
+                    soma = Float.parseFloat(modelo.getValueAt(modelo.getRowCount() - 1, 2).toString().replace("R$", ""));
+
+                    modelo.removeRow(modelo.getRowCount() - 1);
+
+                    for (int i = 0; i < g.length; i++) {
+                        modelo.addRow(new Object[]{g[i].getCodigo(), g[i].getTipo(), "R$ " + g[i].getValor(), g[i].getData().replace('-', '/')});
+                        soma = soma + g[i].getValor();
+                    }
+                    help.setSoma(soma);
+                    modelo.addRow(new Object[]{"Total", "", "R$ " + help.getSoma()});
+
                 }
-                help.setSoma(soma);
-                modelo.addRow(new Object[]{"Total", "", "R$ " + help.getSoma()});
-
             } else if (x == 2) {
 
                 help.setSoma(help.getSoma() - f.removerRegistrosTabela(modelo, jc.getSelectedItem().toString()));

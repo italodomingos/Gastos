@@ -1,6 +1,7 @@
 package view;
 
 import control.CtrlGastos;
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -441,6 +442,11 @@ public class FrmInserir extends javax.swing.JFrame {
     private void jbNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNoteActionPerformed
         
         JTextArea jta = new JTextArea();
+        Dimension dm = new Dimension();
+        dm.setSize(100, 100);
+        jta.setText("#");
+        jta.setMaximumSize(dm);
+        
         Object obj = jta;
         
         String opc[] = {"Adicionar Anotação"};
