@@ -56,6 +56,7 @@ public class Ferramentas {
         return true;
 
     }
+
     public void toExcel(JTable table, File file) throws IOException {
         try {
             DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -85,15 +86,16 @@ public class Ferramentas {
 
         }
     }
-    public ImageIcon setImageSize(ImageIcon imageIcon, int width, int heigt) {
+
+    public static ImageIcon setImageSize(ImageIcon imageIcon, int width, int heigt) {
 
         Image image = imageIcon.getImage();
         Image newimg = image.getScaledInstance(width, heigt, java.awt.Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(newimg);
         return imageIcon;
     }
-    
-     public String[] verData(String mes) {
+
+    public String[] verData(String mes) {
         String cal[] = new String[2];
         switch (mes.toLowerCase()) {
             case "janeiro":

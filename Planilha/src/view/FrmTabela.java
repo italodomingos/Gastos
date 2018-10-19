@@ -15,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -36,17 +35,17 @@ import org.jfree.data.general.DefaultPieDataset;
 
 public class FrmTabela extends javax.swing.JFrame {
 
-    Helper help = new Helper();
+    DefaultTableModel modelo = new DefaultTableModel();
+
+    public Helper help = new Helper();
     boolean ver = true;
-    ListSelectionListener[] listener;
 
     public FrmTabela() {
 
         initComponents();
 
-        Ferramentas f = new Ferramentas();
         ImageIcon imageIcon = new ImageIcon(System.getProperty("user.dir").replace('\\', '/') + "/src/icon/icone.jpg");
-        jlWelcome.setIcon(f.setImageSize(imageIcon, jlWelcome.getWidth(), jlWelcome.getHeight()));
+        jlWelcome.setIcon(Ferramentas.setImageSize(imageIcon, jlWelcome.getWidth(), jlWelcome.getHeight()));
 
         setExtendedState(MAXIMIZED_BOTH);
         jtpGeral.setEnabledAt(1, false);
@@ -97,8 +96,6 @@ public class FrmTabela extends javax.swing.JFrame {
         jtpGeral.setEnabledAt(1, true);
 
         float soma = 0;
-
-        DefaultTableModel modelo = new DefaultTableModel();
 
         jtTabela.setModel(modelo);
         modelo.addColumn("Código");
@@ -176,6 +173,7 @@ public class FrmTabela extends javax.swing.JFrame {
         jmiEditar = new javax.swing.JMenuItem();
         jmFiltrar = new javax.swing.JMenu();
         jmSair = new javax.swing.JMenu();
+        jmTeste = new javax.swing.JMenu();
 
         jTextField1.setText("jTextField1");
 
@@ -203,17 +201,18 @@ public class FrmTabela extends javax.swing.JFrame {
         setTitle("Controle de Gastos");
 
         jlWelcome.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlWelcome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icone.jpg"))); // NOI18N
         jlWelcome.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jpInicioLayout = new javax.swing.GroupLayout(jpInicio);
         jpInicio.setLayout(jpInicioLayout);
         jpInicioLayout.setHorizontalGroup(
             jpInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlWelcome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE)
+            .addComponent(jlWelcome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jpInicioLayout.setVerticalGroup(
             jpInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlWelcome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+            .addComponent(jlWelcome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jtpGeral.addTab("Início", jpInicio);
@@ -235,11 +234,11 @@ public class FrmTabela extends javax.swing.JFrame {
         jpTabela.setLayout(jpTabelaLayout);
         jpTabelaLayout.setHorizontalGroup(
             jpTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
         );
         jpTabelaLayout.setVerticalGroup(
             jpTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
         );
 
         jtpGeral.addTab("Tabela", jpTabela);
@@ -248,11 +247,11 @@ public class FrmTabela extends javax.swing.JFrame {
         jpGraficos.setLayout(jpGraficosLayout);
         jpGraficosLayout.setHorizontalGroup(
             jpGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 864, Short.MAX_VALUE)
+            .addGap(0, 1000, Short.MAX_VALUE)
         );
         jpGraficosLayout.setVerticalGroup(
             jpGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 389, Short.MAX_VALUE)
+            .addGap(0, 667, Short.MAX_VALUE)
         );
 
         jtpGeral.addTab("Gráficos", jpGraficos);
@@ -413,17 +412,25 @@ public class FrmTabela extends javax.swing.JFrame {
         });
         jMenuBar1.add(jmSair);
 
+        jmTeste.setText("Teste");
+        jmTeste.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jmTesteMousePressed(evt);
+            }
+        });
+        jMenuBar1.add(jmTeste);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jtpGeral)
+            .addComponent(jtpGeral, javax.swing.GroupLayout.DEFAULT_SIZE, 1005, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jtpGeral, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jtpGeral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
         );
 
         pack();
@@ -659,11 +666,6 @@ public class FrmTabela extends javax.swing.JFrame {
         JLabel jl2 = new JLabel("\nInício:");
         JLabel jl3 = new JLabel("\nFim");
 
-        jl2.setVisible(false);
-        jl3.setVisible(false);
-        jdcI.setVisible(false);
-        jdcF.setVisible(false);
-
         JRadioButton jrb = new JRadioButton("Filtro por data");
         Ferramentas f = new Ferramentas();
         Gastos[] gas = ct.getFiltros();
@@ -753,6 +755,14 @@ public class FrmTabela extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jmFiltrarMousePressed
 
+    private void jmTesteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmTesteMousePressed
+
+        FrmFiltro ff = new FrmFiltro(this, (DefaultTableModel) jtTabela.getModel());
+        ff.preencherJcb();
+        ff.setVisible(true);
+        
+    }//GEN-LAST:event_jmTesteMousePressed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -817,6 +827,7 @@ public class FrmTabela extends javax.swing.JFrame {
     private javax.swing.JMenu jmMes;
     private javax.swing.JMenu jmNovo;
     private javax.swing.JMenu jmSair;
+    private javax.swing.JMenu jmTeste;
     private javax.swing.JMenuItem jmiAgosto;
     private javax.swing.JMenuItem jmiDataNome;
     private javax.swing.JMenuItem jmiDezembro;

@@ -236,6 +236,14 @@
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jmSairMousePressed"/>
           </Events>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="jmTeste">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Teste"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jmTesteMousePressed"/>
+          </Events>
+        </Menu>
       </SubComponents>
     </Menu>
   </NonVisualComponents>
@@ -263,12 +271,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jtpGeral" alignment="0" max="32767" attributes="0"/>
+          <Component id="jtpGeral" alignment="0" pref="1005" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jtpGeral" alignment="1" max="32767" attributes="0"/>
+          <Component id="jtpGeral" alignment="1" pref="695" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -289,12 +297,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jlWelcome" alignment="1" pref="864" max="32767" attributes="0"/>
+                  <Component id="jlWelcome" alignment="1" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jlWelcome" alignment="1" pref="389" max="32767" attributes="0"/>
+                  <Component id="jlWelcome" alignment="1" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -302,6 +310,9 @@
             <Component class="javax.swing.JLabel" name="jlWelcome">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="11"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icon/icone.jpg"/>
+                </Property>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
             </Component>
@@ -319,12 +330,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" alignment="0" pref="864" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" pref="1000" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" alignment="0" pref="389" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" pref="667" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -364,12 +375,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="864" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="1000" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="389" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="667" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
