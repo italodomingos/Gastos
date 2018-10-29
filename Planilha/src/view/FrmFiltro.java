@@ -6,12 +6,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JFrame;
-import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableModel;
 import model.Gastos;
 
-public class FrmFiltro extends javax.swing.JFrame {
+public final class FrmFiltro extends javax.swing.JFrame {
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
     CtrlGastos ct = new CtrlGastos();
@@ -30,6 +28,7 @@ public class FrmFiltro extends javax.swing.JFrame {
         this.modelo = modelo;
 
         preencherJcb();
+        startListeners();
 
         jlInicio.setVisible(false);
         jlFim.setVisible(false);
@@ -38,6 +37,9 @@ public class FrmFiltro extends javax.swing.JFrame {
         jlTipo.setVisible(false);
         jcbTipos.setVisible(false);
 
+    }
+
+    public void startListeners() {
         jrbData.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent event) {
@@ -77,6 +79,7 @@ public class FrmFiltro extends javax.swing.JFrame {
             }
 
         });
+
     }
 
     private FrmFiltro() {
@@ -87,7 +90,7 @@ public class FrmFiltro extends javax.swing.JFrame {
         jdc1.setDate(null);
         jdc2.setDate(null);
         Gastos[] gas = ct.getFiltros();
-        jcbTipos.addItem(null);
+        jcbTipos.addItem("Escolha um tipo");
 
         for (int i = 0; i < ct.getFiltros().length - 1; i++) {
             jcbTipos.addItem(gas[i].getTipo());
@@ -112,7 +115,6 @@ public class FrmFiltro extends javax.swing.JFrame {
         jbFiltrar = new javax.swing.JButton();
         jcbTipos = new javax.swing.JComboBox<>();
         jbFechar = new javax.swing.JButton();
-        jbVarios = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -140,11 +142,9 @@ public class FrmFiltro extends javax.swing.JFrame {
         });
 
         jbFechar.setText("Fechar");
-
-        jbVarios.setText("Vários");
-        jbVarios.addActionListener(new java.awt.event.ActionListener() {
+        jbFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbVariosActionPerformed(evt);
+                jbFecharActionPerformed(evt);
             }
         });
 
@@ -154,15 +154,13 @@ public class FrmFiltro extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(jbFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(158, 158, 158)
-                        .addComponent(jLabel5))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(jrbTipo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jrbData))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,15 +171,16 @@ public class FrmFiltro extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jdc2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jcbTipos, 0, 120, Short.MAX_VALUE)
-                            .addComponent(jdc1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbVarios)))
+                            .addComponent(jdc1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(101, 101, 101)
+                        .addComponent(jrbTipo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jrbData))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addComponent(jLabel5)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(152, 152, 152)
-                .addComponent(jbFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,17 +189,16 @@ public class FrmFiltro extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jrbTipo)
                     .addComponent(jrbData))
-                .addGap(16, 16, 16)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlTipo)
-                            .addComponent(jcbTipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbVarios))
+                            .addComponent(jcbTipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jdc1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -220,8 +218,6 @@ public class FrmFiltro extends javax.swing.JFrame {
 
     private void jbFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFiltrarActionPerformed
         boolean validador = false;
-        Date date = new Date();
-        sdf.format(date);
         try {
             sdf.format(jdc1.getDate());
         } catch (NullPointerException ex) {
@@ -231,13 +227,15 @@ public class FrmFiltro extends javax.swing.JFrame {
         if (validador) {
             g = ct.getCtrlNome(jcbTipos.getSelectedItem().toString());
             ft.preencher(g);
-        } else if (jcbTipos.getSelectedItem().toString().equals("")) {
+        } else if (jcbTipos.getSelectedItem().toString().equals("Escolha um tipo")) {
+            
             String dataI = sdf.format((jdc1.getDate()));
             String dataF = sdf.format((jdc2.getDate()));
             g = ct.getCtrl(dataI, dataF);
             ft.preencher(g);
 
         } else {
+
             String dataI = sdf.format((jdc1.getDate()));
             String dataF = sdf.format((jdc2.getDate()));
             g = ct.getCtrlDataNome(dataI, dataF, jcbTipos.getSelectedItem().toString());
@@ -247,21 +245,10 @@ public class FrmFiltro extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jbFiltrarActionPerformed
 
-    private void jbVariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVariosActionPerformed
-        JFrame frm = new JFrame();
-        CtrlGastos ct = new CtrlGastos();
-        Gastos[] gas = ct.getFiltros();
-        for (int i = 0; i < ct.getFiltros().length - 1; i++) {
-            
-            frm.add(new JRadioButton(gas[i].getTipo()),i);
-            
-            
-        }
-        frm.validate();
-        frm.setSize(600, 300);
-        frm.setVisible(true);
+    private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
+        dispose();
 
-    }//GEN-LAST:event_jbVariosActionPerformed
+    }//GEN-LAST:event_jbFecharActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -303,7 +290,6 @@ public class FrmFiltro extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton jbFechar;
     private javax.swing.JButton jbFiltrar;
-    private javax.swing.JButton jbVarios;
     private javax.swing.JComboBox<String> jcbTipos;
     private com.toedter.calendar.JDateChooser jdc1;
     private com.toedter.calendar.JDateChooser jdc2;

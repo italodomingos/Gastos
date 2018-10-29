@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/italo.domingos/Documents/NetBeansProjects/ControleGastos2/Planilha/src/control/CtrlGastos.java</file>
-            <file>file:/C:/Users/italo.domingos/Documents/NetBeansProjects/ControleGastos2/Planilha/src/conexao/ConexaoMySql.java</file>
-            <file>file:/C:/Users/italo.domingos/Documents/NetBeansProjects/ControleGastos2/Planilha/src/view/FrmTabela.java</file>
-            <file>file:/C:/Users/italo.domingos/Documents/NetBeansProjects/ControleGastos2/Planilha/src/view/FrmFiltro.java</file>
-            <file>file:/C:/Users/italo.domingos/Documents/NetBeansProjects/ControleGastos2/Planilha/src/view/FrmInserir.java</file>
-            <file>file:/C:/Users/italo.domingos/Documents/NetBeansProjects/ControleGastos2/Planilha/src/control/Ferramentas.java</file>
-            <file>file:/C:/Users/italo.domingos/Documents/NetBeansProjects/ControleGastos2/Planilha/src/view/FrmTeste.java</file>
-            <file>file:/C:/Users/italo.domingos/Documents/NetBeansProjects/ControleGastos2/Planilha/src/control/Helper.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

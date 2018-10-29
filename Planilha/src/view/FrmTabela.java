@@ -27,6 +27,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import model.Gastos;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -44,9 +45,9 @@ public class FrmTabela extends javax.swing.JFrame {
 
         initComponents();
 
-        ImageIcon imageIcon = new ImageIcon(System.getProperty("user.dir").replace('\\', '/') + "/src/icon/icone.jpg");
+        /*ImageIcon imageIcon = new ImageIcon(System.getProperty("user.dir").replace('\\', '/') + "/src/icon/icone.jpg");
         jlWelcome.setIcon(Ferramentas.setImageSize(imageIcon, jlWelcome.getWidth(), jlWelcome.getHeight()));
-
+         */
         setExtendedState(MAXIMIZED_BOTH);
         jtpGeral.setEnabledAt(1, false);
         jtpGeral.setEnabledAt(2, false);
@@ -97,12 +98,12 @@ public class FrmTabela extends javax.swing.JFrame {
 
         float soma = 0;
 
-        jtTabela.setModel(modelo);
         modelo.addColumn("Código");
         modelo.addColumn("Tipo");
         modelo.addColumn("Valor");
         modelo.addColumn("Data");
         modelo.addColumn("Área");
+        jtTabela.setModel(modelo);
 
         jtTabela.getColumnModel().getColumn(0);
         jtTabela.getColumnModel().getColumn(1);
@@ -119,6 +120,19 @@ public class FrmTabela extends javax.swing.JFrame {
         help.setSoma(soma);
         modelo.addRow(new Object[]{"Total", "", "R$ " + soma});
         jtpGeral.setSelectedIndex(1);
+
+    }
+
+    public void clearTable() {
+
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(1);
+        }
+        for (int i = 0; i < modelo.getColumnCount(); i++) {
+            
+            
+                    
+        }
 
     }
 
@@ -171,9 +185,9 @@ public class FrmTabela extends javax.swing.JFrame {
         jmiDataNome = new javax.swing.JMenuItem();
         jmiRemover = new javax.swing.JMenuItem();
         jmiEditar = new javax.swing.JMenuItem();
-        jmFiltrar = new javax.swing.JMenu();
-        jmSair = new javax.swing.JMenu();
         jmTeste = new javax.swing.JMenu();
+        jmSair = new javax.swing.JMenu();
+        jmFiltrar = new javax.swing.JMenu();
 
         jTextField1.setText("jTextField1");
 
@@ -200,8 +214,7 @@ public class FrmTabela extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Controle de Gastos");
 
-        jlWelcome.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jlWelcome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icone.jpg"))); // NOI18N
+        jlWelcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlWelcome.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jpInicioLayout = new javax.swing.GroupLayout(jpInicio);
@@ -396,13 +409,13 @@ public class FrmTabela extends javax.swing.JFrame {
 
         jMenuBar1.add(jmFerramentas);
 
-        jmFiltrar.setText("Filtrar");
-        jmFiltrar.addMouseListener(new java.awt.event.MouseAdapter() {
+        jmTeste.setText("Filtrar");
+        jmTeste.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jmFiltrarMousePressed(evt);
+                jmTesteMousePressed(evt);
             }
         });
-        jMenuBar1.add(jmFiltrar);
+        jMenuBar1.add(jmTeste);
 
         jmSair.setText("Sair");
         jmSair.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -412,13 +425,13 @@ public class FrmTabela extends javax.swing.JFrame {
         });
         jMenuBar1.add(jmSair);
 
-        jmTeste.setText("Teste");
-        jmTeste.addMouseListener(new java.awt.event.MouseAdapter() {
+        jmFiltrar.setText("Outro Filtrar");
+        jmFiltrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jmTesteMousePressed(evt);
+                jmFiltrarMousePressed(evt);
             }
         });
-        jMenuBar1.add(jmTeste);
+        jMenuBar1.add(jmFiltrar);
 
         setJMenuBar(jMenuBar1);
 
@@ -426,11 +439,11 @@ public class FrmTabela extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jtpGeral, javax.swing.GroupLayout.DEFAULT_SIZE, 1005, Short.MAX_VALUE)
+            .addComponent(jtpGeral)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jtpGeral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
+            .addComponent(jtpGeral, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -760,7 +773,7 @@ public class FrmTabela extends javax.swing.JFrame {
         FrmFiltro ff = new FrmFiltro(this, (DefaultTableModel) jtTabela.getModel());
         ff.preencherJcb();
         ff.setVisible(true);
-        
+
     }//GEN-LAST:event_jmTesteMousePressed
 
     public static void main(String args[]) {

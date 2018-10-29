@@ -5,7 +5,7 @@ public class Gastos {
     private String tipo;
     private int codigo;
     private float valor,soma;
-    private String data, mes,area;
+    private String data, mes,area,note;
     
 
     public Gastos() {
@@ -73,6 +73,14 @@ public class Gastos {
 
     public void setMes(String mes) {
         this.mes = mes;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
 }
